@@ -189,16 +189,20 @@ export function ContactUs({ className }: ContactUsProps) {
                 </div>
               </ContactCard>
 
-              <div className="pointer-events-none absolute top-1/2 left-1/2 z-10 -translate-x-1/2 -translate-y-[70%]">
-                <div className="flex flex-col items-center">
+              <div className="pointer-events-none absolute top-1/2 left-1/2 z-10">
+                <div className="absolute bottom-0 left-0 -translate-x-1/2">
                   <MapPin
                     className="size-12 fill-(--brand-red) text-(--brand-red) drop-shadow-md"
                     strokeWidth={1.5}
                   />
-                  <span className="mt-1 rounded-md bg-white/95 px-2 py-0.5 text-[10px] font-bold tracking-wide text-zinc-800 uppercase shadow-sm">
-                    Main Gulberg
-                  </span>
+                  <span
+                    aria-hidden
+                    className="absolute top-[0.7rem] left-1/2 size-3 -translate-x-1/2 rounded-full bg-white"
+                  />
                 </div>
+                <span className="absolute top-2 left-0 -translate-x-1/2 whitespace-nowrap rounded-md bg-white/95 px-2 py-0.5 text-[10px] font-bold tracking-wide text-zinc-800 uppercase shadow-sm">
+                    Main Gulberg
+                </span>
               </div>
 
               <div className="absolute inset-x-2 bottom-2 z-10 min-w-0 rounded-[16px] bg-white/95 p-2.5 shadow-[0_8px_24px_rgba(15,23,42,0.1)] backdrop-blur-sm sm:inset-x-4 sm:bottom-4 sm:p-4">

@@ -4,10 +4,15 @@ import Image from "next/image"
 import Link from "next/link"
 import { useState } from "react"
 import { ChevronRight } from "lucide-react"
+import ProgressIcon from "@/assets/icons/progress_icon.svg"
+import RightTickIcon from "@/assets/icons/right_tick.svg"
+import SecurityIcon from "@/assets/icons/security_icon.svg"
 import { Header } from "@/components/layout/header"
 import { Footer } from "@/components/layout/footer"
 import { getProduct } from "@/data/products"
 import { useParams, notFound } from "next/navigation"
+
+const featureIcons = [RightTickIcon, SecurityIcon, ProgressIcon]
 
 const tabs = [
   "FEATURES & BENEFITS",
@@ -30,64 +35,54 @@ export default function ProductDetailPage() {
     <>
       <Header />
       <main className="relative">
-        {/* Hero Section - Matches Figma exactly */}
-        <section className="bg-white py-14">
-          <div className="w-full max-w-full px-0">
-            {/* Hero Grid: 2 columns with image LEFT, text RIGHT */}
-            <div className="grid grid-cols-2 gap-0" style={{ minHeight: "594px" }}>
-              {/* LEFT: Hero Image */}
-              <div className="relative bg-white overflow-hidden flex items-center justify-center">
-                <img
+        <section className="bg-white py-12 sm:py-16 lg:py-20">
+          <div className="mx-auto max-w-7xl px-5 md:px-8">
+            <div className="grid items-center gap-10 md:grid-cols-2 lg:gap-16">
+              <div className="relative mx-auto aspect-square w-full max-w-[34rem] overflow-hidden bg-white">
+                <Image
                   src={product.image}
                   alt={product.name}
-                  className="w-full h-full"
-                  // className="object-cover"
+                  fill
+                  priority
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-contain"
                 />
-                {/* Decorative blur overlay from Figma */}
                 <div
-                  className="absolute rounded-2xl pointer-events-none"
-                  style={{
-                    width: "445.5px",
-                    height: "445.5px",
-                    top: "74.25px",
-                    left: "74.25px",
-                    backgroundColor: "rgba(192, 48, 44, 0.05)",
-                    filter: "blur(36px)",
-                    borderRadius: "13.5px"
-                  }}
+                  aria-hidden
+                  className="pointer-events-none absolute inset-[12%] rounded-2xl bg-red-700/5 blur-3xl"
                 />
               </div>
 
-              {/* RIGHT: Text Content */}
-              <div className="bg-white p-24 flex flex-col justify-center">
-                <div className="space-y-7">
-                  {/* Navigation/Breadcrumb */}
-                  <div className="flex items-center gap-2 text-sm font-medium text-gray-500 tracking-widest uppercase">
-                    <Link href="/" className="hover:text-gray-700">HOME</Link>
-                    <ChevronRight className="w-1.5 h-1.5" />
-                    <Link href="/products" className="hover:text-gray-700">PRODUCTS</Link>
+              <div className="flex flex-col justify-center">
+                <div className="space-y-5 sm:space-y-6">
+                  <div className="flex items-center gap-2 text-xs font-medium tracking-[0.16em] text-zinc-500 uppercase">
+                    <Link href="/" className="transition-colors hover:text-zinc-800">
+                      Home
+                    </Link>
+                    <ChevronRight className="size-3" />
+                    <Link
+                      href="/#manufacturing-services"
+                      className="transition-colors hover:text-zinc-800"
+                    >
+                      Products
+                    </Link>
                   </div>
 
-                  {/* Category Tag */}
-                  <div className="text-[#C0302C] font-semibold text-xs tracking-widest">
+                  <p className="text-[11px] font-bold tracking-[0.14em] text-[#C0302C] uppercase sm:text-xs">
                     {product.category}
-                  </div>
+                  </p>
 
-                  {/* Main Heading - Matches Figma Manrope 54px */}
-                  <h1 className="text-5xl font-extrabold text-[#191C1E] leading-tight" style={{ fontFamily: "Manrope" }}>
-                    {product.name}
-                    <br />
-                    {product.tagline}
+                  <h1 className="max-w-2xl font-satoshi text-4xl leading-[1.08] font-bold tracking-[-0.035em] text-[#191C1E] sm:text-5xl lg:text-[3.25rem]">
+                    {product.name} {product.tagline}
                   </h1>
 
-                  {/* Tags */}
-                  <div className="flex gap-4 pt-2">
-                    <div className="bg-gray-100 px-4 py-2 rounded text-xs font-bold text-gray-700 tracking-wider">
+                  <div className="flex flex-wrap gap-3 pt-2">
+                    <span className="border border-zinc-200 bg-[#E6E8EB] px-4 py-2 text-[10px] font-bold tracking-[0.1em] text-zinc-600 uppercase">
                       PRODUCT TYPE: {product.type.toUpperCase()}
-                    </div>
-                    <div className="border border-gray-300 px-4 py-2 rounded text-xs font-bold text-gray-500 tracking-wider">
+                    </span>
+                    <span className="border border-zinc-300 px-4 py-2 text-[10px] font-bold tracking-[0.1em] text-zinc-500 uppercase">
                       {product.material.toUpperCase()}
-                    </div>
+                    </span>
                   </div>
                 </div>
               </div>
@@ -96,17 +91,17 @@ export default function ProductDetailPage() {
         </section>
 
         {/* Navigation Tabs */}
-        <section className="border-t border-gray-100 bg-white sticky top-0 z-40">
-          <div className="mx-auto max-w-7xl px-8">
-            <div className="flex gap-12">
+        <section className="sticky top-0 z-40 border-y border-zinc-200/70 bg-[#f8f9fc]">
+          <div className="mx-auto max-w-7xl overflow-x-auto px-5 md:px-8">
+            <div className="flex min-w-max gap-8 sm:gap-12">
               {tabs.map((tab) => (
                 <button
                   key={tab}
                   onClick={() => setActiveTab(tab)}
-                  className={`px-2 py-5 font-bold text-xs tracking-widest transition-all border-b-2 ${
+                  className={`border-b-2 px-0 py-5 text-[11px] font-bold tracking-[0.14em] transition-colors ${
                     activeTab === tab
-                      ? "text-[#1A1F26] border-[#C0302C] border-b-[3px]"
-                      : "text-gray-400 border-transparent hover:text-gray-600"
+                      ? "border-[#C0302C] text-[#C0302C]"
+                      : "border-transparent text-zinc-500 hover:text-zinc-800"
                   }`}
                 >
                   {tab}
@@ -118,36 +113,36 @@ export default function ProductDetailPage() {
 
         {/* Features & Benefits Section */}
         {activeTab === "FEATURES & BENEFITS" && (
-          <section className="bg-white py-24">
-            <div className="mx-auto max-w-7xl px-8">
-              <div className="grid grid-cols-12 gap-16">
-                {/* Left Column */}
-                <div className="col-span-7 space-y-12">
-                  {/* Section Header */}
-                  <div className="space-y-6">
-                    <h2 className="text-5xl font-black text-[#1A1F26] tracking-tight">
+          <section className="bg-[#f8f9fc] py-16 sm:py-20">
+            <div className="mx-auto max-w-7xl px-5 md:px-8">
+              <div className="grid items-start gap-10 lg:grid-cols-[minmax(0,1.6fr)_minmax(20rem,0.9fr)] lg:gap-20">
+                <div>
+                  <div className="space-y-3">
+                    <h2 className="font-satoshi text-2xl font-bold tracking-[-0.02em] text-[#1A1F26] sm:text-3xl">
                       Features & Benefits
                     </h2>
-                    <p className="text-base text-gray-600 leading-relaxed max-w-xl">
+                    <p className="max-w-2xl text-sm leading-6 text-zinc-600 sm:text-base sm:leading-7">
                       {product.description}
                     </p>
                   </div>
 
-                  {/* Features List */}
-                  <div className="space-y-10">
+                  <div className="mt-8 space-y-6">
                     {product.features.map((feature, idx) => (
-                      <div key={idx} className="flex gap-6">
-                        {/* Icon */}
-                        <div className="flex-shrink-0 w-6 h-6 text-2xl flex items-center justify-center">
-                          {["⚡", "🔒", "🛡️"][idx % 3]}
+                      <div key={feature.title} className="flex items-start gap-4">
+                        <div className="flex size-6 shrink-0 items-center justify-center">
+                          <Image
+                            src={featureIcons[idx % featureIcons.length]}
+                            alt=""
+                            className="size-5 object-contain"
+                            aria-hidden
+                          />
                         </div>
 
-                        {/* Content */}
-                        <div className="space-y-3 flex-1">
-                          <h3 className="font-bold text-lg text-[#1A1F26]">
+                        <div className="min-w-0 flex-1">
+                          <h3 className="text-sm font-bold text-[#1A1F26]">
                             {feature.title}
                           </h3>
-                          <p className="text-gray-600 leading-relaxed text-sm">
+                          <p className="mt-1 text-xs leading-5 text-zinc-600 sm:text-sm sm:leading-6">
                             {feature.description}
                           </p>
                         </div>
@@ -156,35 +151,31 @@ export default function ProductDetailPage() {
                   </div>
                 </div>
 
-                {/* Right Column: Product Details Card */}
-                <div className="col-span-5">
-                  <div className="bg-white border border-gray-200 rounded p-8">
-                    <h3 className="text-[#C0302C] font-bold text-xl mb-8">
+                <aside className="border border-zinc-200/80 bg-white p-6 sm:p-8">
+                    <h3 className="mb-6 font-satoshi text-base font-bold text-[#C0302C]">
                       Product Details
                     </h3>
 
-                    {/* Specs Table */}
-                    <div className="space-y-0">
+                    <dl>
                       {product.specs.map((spec, idx) => (
                         <div
-                          key={idx}
-                          className={`flex justify-between items-baseline py-4 ${
+                          key={spec.label}
+                          className={`grid grid-cols-[minmax(0,0.8fr)_minmax(0,1.35fr)] items-baseline gap-4 py-4 ${
                             idx !== product.specs.length - 1
-                              ? "border-b border-gray-100"
+                              ? "border-b border-zinc-100"
                               : ""
                           }`}
                         >
-                          <span className="text-xs font-bold text-gray-500 tracking-widest uppercase">
+                          <dt className="text-[10px] font-semibold tracking-[0.1em] text-zinc-400 uppercase">
                             {spec.label}
-                          </span>
-                          <span className="text-sm font-semibold text-[#1A1F26] text-right font-mono tabular-nums">
+                          </dt>
+                          <dd className="text-right text-xs font-semibold text-[#1A1F26] sm:text-sm">
                             {spec.value}
-                          </span>
+                          </dd>
                         </div>
                       ))}
-                    </div>
-                  </div>
-                </div>
+                    </dl>
+                </aside>
               </div>
             </div>
           </section>

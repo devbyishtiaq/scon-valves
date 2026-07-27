@@ -1,6 +1,6 @@
 "use client"
 
-import { ChevronDown, Menu, Search, X } from "lucide-react"
+import { ChevronDown, ChevronRight, Menu, Search, X } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
@@ -8,6 +8,9 @@ import { useEffect, useId, useRef, useState } from "react"
 
 import MainLogo from "@/assets/images/main-logo.png"
 import { Button } from "@/components/ui/button"
+import {
+  productCategories,
+} from "@/data/product-categories"
 import { cn } from "@/lib/utils"
 
 const navLinks = [
@@ -17,14 +20,6 @@ const navLinks = [
     label: "Products",
     href: "#products",
     hasDropdown: true,
-    children: [
-      { label: "Gate Valves", href: "#gate-valves" },
-      { label: "Butterfly Valves", href: "#butterfly-valves" },
-      { label: "Globe Valves", href: "#globe-valves" },
-      { label: "Check Valves", href: "#check-valves" },
-      { label: "Strainers", href: "#strainers" },
-      { label: "Ball Valves", href: "#ball-valves" },
-    ],
   },
   { label: "Certificates", href: "#certificates" },
   { label: "Gallery", href: "#gallery" },
@@ -38,11 +33,21 @@ const getNavItemClass = (isHomePage: boolean) =>
 export function Header({ className }: { className?: string }) {
   const pathname = usePathname()
   const isHomePage = pathname === "/"
+  const isProductPage = pathname.startsWith("/products")
   const [productsOpen, setProductsOpen] = useState(false)
+  const [openCategory, setOpenCategory] = useState<string | null>(null)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false)
+  const [mobileOpenCategory, setMobileOpenCategory] = useState<string | null>(
+    null
+  )
   const dropdownRef = useRef<HTMLDivElement>(null)
   const panelId = useId()
+
+  const closeProducts = () => {
+    setProductsOpen(false)
+    setOpenCategory(null)
+  }
 
   useEffect(() => {
     function onPointerDown(event: MouseEvent) {
@@ -51,12 +56,14 @@ export function Header({ className }: { className?: string }) {
         !dropdownRef.current.contains(event.target as Node)
       ) {
         setProductsOpen(false)
+        setOpenCategory(null)
       }
     }
 
     function onKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") {
         setProductsOpen(false)
+        setOpenCategory(null)
         setMobileOpen(false)
       }
     }
@@ -81,10 +88,30 @@ export function Header({ className }: { className?: string }) {
   }, [mobileOpen])
 
   useEffect(() => {
-    if (!mobileOpen) setMobileProductsOpen(false)
+    if (!mobileOpen) {
+      setMobileProductsOpen(false)
+      setMobileOpenCategory(null)
+    }
   }, [mobileOpen])
 
   const closeMobile = () => setMobileOpen(false)
+
+  const toggleCategory = (label: string) => {
+    setOpenCategory(label)
+  }
+
+  const toggleMobileCategory = (label: string) => {
+    setMobileOpenCategory(label)
+  }
+
+  const activeCategory =
+    productCategories.find((category) => category.label === openCategory) ??
+    null
+
+  const activeMobileCategory =
+    productCategories.find(
+      (category) => category.label === mobileOpenCategory
+    ) ?? null
 
   return (
     <header
@@ -120,13 +147,7 @@ export function Header({ className }: { className?: string }) {
           {navLinks.map((link) => {
             if ("hasDropdown" in link && link.hasDropdown) {
               return (
-                <div
-                  key={link.label}
-                  ref={dropdownRef}
-                  className="relative"
-                  onMouseEnter={() => setProductsOpen(true)}
-                  onMouseLeave={() => setProductsOpen(false)}
-                >
+                <div key={link.label} ref={dropdownRef} className="relative">
                   <button
                     type="button"
                     aria-expanded={productsOpen}
@@ -134,9 +155,17 @@ export function Header({ className }: { className?: string }) {
                     className={cn(
                       getNavItemClass(isHomePage),
                       !isHomePage && "text-red-600",
-                      productsOpen && (isHomePage ? "bg-white/15 text-white" : "bg-gray-200/50")
+                      productsOpen &&
+                        (isHomePage
+                          ? "bg-white/15 text-white"
+                          : "bg-gray-200/50")
                     )}
-                    onClick={() => setProductsOpen((open) => !open)}
+                    onClick={() => {
+                      setProductsOpen((open) => {
+                        if (open) setOpenCategory(null)
+                        return !open
+                      })
+                    }}
                   >
                     {link.label}
                     <ChevronDown
@@ -152,43 +181,112 @@ export function Header({ className }: { className?: string }) {
                   <div
                     role="menu"
                     className={cn(
-                      "absolute top-full left-1/2 z-10 w-52 -translate-x-1/2 pt-2 transition-all",
+                      "absolute top-full left-0 z-10 pt-2 transition-all",
                       productsOpen
                         ? "visible translate-y-0 opacity-100"
                         : "invisible pointer-events-none -translate-y-1 opacity-0"
                     )}
                   >
-                    <ul className={cn(
-                      "overflow-hidden rounded-lg px-1.5 py-1",
-                      isHomePage
-                        ? "border border-white/25 bg-black/80 backdrop-blur-md"
-                        : "border border-gray-200 bg-white shadow-md"
-                    )}>
-                      {link.children.map((item) => (
-                        <li key={item.label} role="none">
-                          <Link
-                            role="menuitem"
-                            href={item.href}
+                    <div
+                      className={cn(
+                        "flex overflow-hidden rounded-lg",
+                        isHomePage
+                          ? "border border-white/25 bg-black/80 backdrop-blur-md"
+                          : "border border-gray-200 bg-white shadow-md"
+                      )}
+                    >
+                      <ul className="max-h-[min(70vh,28rem)] w-60 shrink-0 overflow-y-auto py-1.5">
+                        {productCategories.map((category) => {
+                          const isActive = openCategory === category.label
+
+                          return (
+                            <li key={category.label} role="none">
+                              <button
+                                type="button"
+                                role="menuitem"
+                                aria-expanded={isActive}
+                                aria-haspopup="menu"
+                                className={cn(
+                                  "flex w-full items-center justify-between gap-2 px-3.5 py-2.5 text-left text-sm transition-colors",
+                                  isHomePage
+                                    ? "text-white/90 hover:bg-white/15 hover:text-white"
+                                    : "text-gray-700 hover:bg-gray-50 hover:text-gray-900",
+                                  isActive &&
+                                    (isHomePage
+                                      ? "bg-white/15 text-white"
+                                      : "bg-gray-50 text-gray-900")
+                                )}
+                                onClick={() => toggleCategory(category.label)}
+                              >
+                                <span>{category.label}</span>
+                                <ChevronRight
+                                  className="size-3.5 shrink-0 opacity-70"
+                                  aria-hidden
+                                />
+                              </button>
+                            </li>
+                          )
+                        })}
+                      </ul>
+
+                      {activeCategory ? (
+                        <div
+                          className={cn(
+                            "max-h-[min(70vh,28rem)] w-56 shrink-0 overflow-y-auto border-l py-1.5",
+                            isHomePage ? "border-white/15" : "border-gray-200"
+                          )}
+                          role="menu"
+                          aria-label={`${activeCategory.label} materials`}
+                        >
+                          <p
                             className={cn(
-                              "block px-4 py-2.5 text-sm transition-colors",
-                              isHomePage
-                                ? "text-white/90 hover:bg-white/15 hover:text-white"
-                                : "text-gray-700 hover:bg-gray-50 hover:text-gray-900"
+                              "px-3.5 pb-1.5 pt-2 text-[10px] font-semibold tracking-[0.12em] uppercase",
+                              isHomePage ? "text-white/45" : "text-gray-400"
                             )}
-                            onClick={() => setProductsOpen(false)}
                           >
-                            {item.label}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
+                            {activeCategory.label}
+                          </p>
+                          <ul className="list-outside list-disc pl-7 pr-2">
+                            {activeCategory.materials.map((material) => (
+                              <li
+                                key={material.label}
+                                role="none"
+                                className={cn(
+                                  isHomePage
+                                    ? "marker:text-white/40"
+                                    : "marker:text-gray-400"
+                                )}
+                              >
+                                <Link
+                                  role="menuitem"
+                                  href={material.href}
+                                  className={cn(
+                                    "block py-2 pr-2 text-sm transition-colors",
+                                    isHomePage
+                                      ? "text-white/75 hover:text-white"
+                                      : "text-gray-600 hover:text-gray-900"
+                                  )}
+                                  onClick={closeProducts}
+                                >
+                                  {material.label}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ) : null}
+                    </div>
                   </div>
                 </div>
               )
             }
 
             return (
-              <Link key={link.label} href={link.href} className={getNavItemClass(isHomePage)}>
+              <Link
+                key={link.label}
+                href={link.href}
+                className={getNavItemClass(isHomePage)}
+              >
                 {link.label}
               </Link>
             )
@@ -213,7 +311,11 @@ export function Header({ className }: { className?: string }) {
             asChild
             variant="secondary"
             size="sm"
-            className="hidden sm:inline-flex"
+            className={cn(
+              "hidden sm:inline-flex",
+              isProductPage &&
+                "rounded-lg border border-zinc-300 bg-white font-medium text-zinc-900 shadow-none hover:bg-zinc-50"
+            )}
           >
             <Link href="#login">Login</Link>
           </Button>
@@ -269,10 +371,12 @@ export function Header({ className }: { className?: string }) {
             mobileOpen ? "translate-x-0" : "translate-x-full"
           )}
         >
-          <div className={cn(
-            "flex items-center justify-between border-b px-5 py-4",
-            isHomePage ? "border-white/10" : "border-gray-200"
-          )}>
+          <div
+            className={cn(
+              "flex items-center justify-between border-b px-5 py-4",
+              isHomePage ? "border-white/10" : "border-gray-200"
+            )}
+          >
             <Image
               width={140}
               height={26}
@@ -286,7 +390,9 @@ export function Header({ className }: { className?: string }) {
               aria-label="Close menu"
               className={cn(
                 "inline-flex size-9 items-center justify-center rounded-xl transition-colors",
-                isHomePage ? "text-white hover:bg-white/10" : "text-gray-700 hover:bg-gray-200/50"
+                isHomePage
+                  ? "text-white hover:bg-white/10"
+                  : "text-gray-700 hover:bg-gray-200/50"
               )}
               onClick={closeMobile}
             >
@@ -311,9 +417,12 @@ export function Header({ className }: { className?: string }) {
                           ? "text-white/95 hover:bg-white/10"
                           : "text-gray-700 hover:bg-gray-100"
                       )}
-                      onClick={() =>
-                        setMobileProductsOpen((open) => !open)
-                      }
+                      onClick={() => {
+                        setMobileProductsOpen((open) => {
+                          if (open) setMobileOpenCategory(null)
+                          return !open
+                        })
+                      }}
                     >
                       {link.label}
                       <ChevronDown
@@ -332,24 +441,89 @@ export function Header({ className }: { className?: string }) {
                           : "grid-rows-[0fr]"
                       )}
                     >
-                      <ul className="overflow-hidden pl-2">
-                        {link.children.map((item) => (
-                          <li key={item.label}>
-                            <Link
-                              href={item.href}
+                      <div className="overflow-hidden">
+                        <ul className="pl-1">
+                          {productCategories.map((category) => {
+                            const isCategoryOpen =
+                              mobileOpenCategory === category.label
+
+                            return (
+                              <li key={category.label}>
+                                <button
+                                  type="button"
+                                  aria-expanded={isCategoryOpen}
+                                  className={cn(
+                                    "flex w-full items-center justify-between rounded-lg px-3 py-2.5 text-left text-sm transition-colors",
+                                    isHomePage
+                                      ? "text-white/85 hover:bg-white/10 hover:text-white"
+                                      : "text-gray-700 hover:bg-gray-100 hover:text-gray-900",
+                                    isCategoryOpen &&
+                                      (isHomePage
+                                        ? "bg-white/10 text-white"
+                                        : "bg-gray-100 text-gray-900")
+                                  )}
+                                  onClick={() =>
+                                    toggleMobileCategory(category.label)
+                                  }
+                                >
+                                  <span>{category.label}</span>
+                                  <ChevronRight
+                                    className="size-3.5 shrink-0 opacity-70"
+                                    aria-hidden
+                                  />
+                                </button>
+                              </li>
+                            )
+                          })}
+                        </ul>
+
+                        {activeMobileCategory ? (
+                          <div
+                            className={cn(
+                              "mt-2 rounded-lg border px-3 py-2",
+                              isHomePage
+                                ? "border-white/15 bg-white/5"
+                                : "border-gray-200 bg-gray-50"
+                            )}
+                          >
+                            <p
                               className={cn(
-                                "block rounded-lg px-3 py-2.5 text-sm transition-colors",
-                                isHomePage
-                                  ? "text-white/75 hover:bg-white/10 hover:text-white"
-                                  : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+                                "pb-1 text-[10px] font-semibold tracking-[0.12em] uppercase",
+                                isHomePage ? "text-white/45" : "text-gray-400"
                               )}
-                              onClick={closeMobile}
                             >
-                              {item.label}
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
+                              {activeMobileCategory.label}
+                            </p>
+                            <ul
+                              className={cn(
+                                "list-outside list-disc pl-5",
+                                isHomePage
+                                  ? "marker:text-white/40"
+                                  : "marker:text-gray-400"
+                              )}
+                            >
+                              {activeMobileCategory.materials.map(
+                                (material) => (
+                                  <li key={material.label}>
+                                    <Link
+                                      href={material.href}
+                                      className={cn(
+                                        "block py-1.5 text-sm transition-colors",
+                                        isHomePage
+                                          ? "text-white/70 hover:text-white"
+                                          : "text-gray-600 hover:text-gray-900"
+                                      )}
+                                      onClick={closeMobile}
+                                    >
+                                      {material.label}
+                                    </Link>
+                                  </li>
+                                )
+                              )}
+                            </ul>
+                          </div>
+                        ) : null}
+                      </div>
                     </div>
                   </div>
                 )
@@ -373,11 +547,21 @@ export function Header({ className }: { className?: string }) {
             })}
           </nav>
 
-          <div className={cn(
-            "border-t p-4",
-            isHomePage ? "border-white/10" : "border-gray-200"
-          )}>
-            <Button asChild variant="secondary" className="w-full">
+          <div
+            className={cn(
+              "border-t p-4",
+              isHomePage ? "border-white/10" : "border-gray-200"
+            )}
+          >
+            <Button
+              asChild
+              variant="secondary"
+              className={cn(
+                "w-full",
+                isProductPage &&
+                  "rounded-lg border border-zinc-300 bg-white font-medium text-zinc-900 shadow-none hover:bg-zinc-50"
+              )}
+            >
               <Link href="#login" onClick={closeMobile}>
                 Login
               </Link>

@@ -79,9 +79,9 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
   return (
     <article
       id={service.href.replace("#", "")}
-      className="scroll-mt-24 overflow-hidden rounded-3xl bg-white p-5 shadow-[0_8px_30px_rgb(0,0,0,0.06)] sm:p-6"
+      className="service-card scroll-mt-24 overflow-hidden rounded-3xl bg-white p-5 transition-shadow duration-300"
     >
-      <div className="grid grid-cols-[1.15fr_0.85fr] items-center gap-3 sm:gap-4">
+      <div className="grid grid-cols-[1.15fr_0.85fr] items-center gap-3 sm:gap-4 ">
         <motion.div
           className="relative min-w-0"
           initial={textMotion.initial}
@@ -149,7 +149,7 @@ export function ManufacturingServices({
   return (
     <Section
       id="manufacturing-services"
-      className={cn("bg-zinc-100/80", className)}
+      className={cn(" sm:p-6 bg-zinc-100/80", className)}
     >
       <div className="w-full">
         <div className="mb-10 text-center md:mb-14">
