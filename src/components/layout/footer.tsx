@@ -25,6 +25,41 @@ const CONTACT = [
   "marketing@sfrvalves.com",
 ] as const
 
+function FacebookIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 640 640"
+    >
+      <path
+        className={className}
+        d="M240 363.3L240 576L356 576L356 363.3L442.5 363.3L460.5 265.5L356 265.5L356 230.9C356 179.2 376.3 159.4 428.7 159.4C445 159.4 458.1 159.8 465.7 160.6L465.7 71.9C451.4 68 416.4 64 396.2 64C289.3 64 240 114.5 240 223.4L240 265.5L174 265.5L174 363.3L240 363.3z"
+      />
+    </svg>
+  )
+}
+
+function LinkedinIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 640 640"
+    >
+      <path
+        className={className}
+        d="M196.3 512L103.4 512L103.4 212.9L196.3 212.9L196.3 512zM149.8 172.1C120.1 172.1 96 147.5 96 117.8C96 103.5 101.7 89.9 111.8 79.8C121.9 69.7 135.6 64 149.8 64C164 64 177.7 69.7 187.8 79.8C197.9 89.9 203.6 103.6 203.6 117.8C203.6 147.5 179.5 172.1 149.8 172.1zM543.9 512L451.2 512L451.2 366.4C451.2 331.7 450.5 287.2 402.9 287.2C354.6 287.2 347.2 324.9 347.2 363.9L347.2 512L254.4 512L254.4 212.9L343.5 212.9L343.5 253.7L344.8 253.7C357.2 230.2 387.5 205.4 432.7 205.4C526.7 205.4 544 267.3 544 347.7L544 512L543.9 512z"
+      />
+    </svg>
+  )
+}
+
+const SOCIAL_LINKS = [
+  { label: "Facebook", href: "https://www.facebook.com/", icon: FacebookIcon },
+  { label: "LinkedIn", href: "https://www.linkedin.com/", icon: LinkedinIcon },
+] as const
+
 const worldMapSrc =
   typeof worldMap === "string" ? worldMap : (worldMap as { src: string }).src
 
@@ -47,7 +82,7 @@ export function Footer({ className }: FooterProps) {
         style={{ backgroundImage: `url(${FooterMap})` }}
       />
       <div className="relative mx-auto w-full max-w-7xl px-5 pt-14 pb-8 md:px-8 md:pt-16 md:pb-10">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-6 lg:gap-8">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-7 lg:gap-8">
           <div className="col-span-3">
             <Link
               href="/"
@@ -112,6 +147,27 @@ export function Footer({ className }: FooterProps) {
                   ) : (
                     line
                   )}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="col-span-1">
+            <h3 className="text-base font-semibold text-white">Follow Us</h3>
+            <ul className="mt-4 space-y-3">
+              {SOCIAL_LINKS.map(({ label, href, icon: Icon }) => (
+                <li key={label}>
+                  <a
+                    href={href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="group inline-flex items-center gap-3 text-sm text-zinc-400 transition-colors hover:text-white"
+                  >
+                    <span className="flex h-7 w-7 items-center justify-center rounded-full border border-white/15 bg-white/5 text-[#e3b34f] transition-all group-hover:border-[#e3b34f]/60! group-hover:bg-[#e3b34f]/10 group-hover:text-[#f6c968]">
+                      <Icon className="h-4 w-4 transition-all fill-white group-hover:fill-[#e3b34f]/60" />
+                    </span>
+                    <span>{label}</span>
+                  </a>
                 </li>
               ))}
             </ul>

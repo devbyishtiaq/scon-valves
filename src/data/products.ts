@@ -1,10 +1,13 @@
+import type { StaticImageData } from "next/image"
+import productVelve from "@/assets/images/product-velve.jpeg"
+
 export interface Product {
   id: string
   slug: string
   name: string
   tagline: string
   category: string
-  image: string
+  image: string | StaticImageData
   type: string
   material: string
   specs: {
@@ -30,7 +33,7 @@ export const products: Product[] = [
     material: "Forged Steel",
     specs: [
       { label: "SIZE RANGE", value: "NPS 1/2-36" },
-      { label: "PRESSURE CLASS", value: "ASME 150-4500" },
+      { label: "Pressure Rating", value: "ASME 150-4500" },
       { label: "BODY MATERIAL", value: "Forged Carbon, Stainless, Alloys" },
       { label: "TEMPERATURE", value: "Up to 1500°F (815°C)" },
       { label: "STANDARDS", value: "API 608, API 6D, ASME B16.34" },
@@ -59,34 +62,35 @@ export const products: Product[] = [
     id: "gate-valves",
     slug: "gate-valves",
     name: "Gate Valves",
-    tagline: "Reliable isolation valves for industrial piping",
-    category: "ISOLATION VALVES",
-    image: "/images/securaseal-valve-hero.png",
+    tagline: "Non-Rising, Stem (NRS), Screwed Bonned, Threaded",
+    category: "GATE VALVE, Non-Rising Stem (NRS), Screwed Bonnet, Threaded",
+    image: productVelve,
     type: "Gate",
-    material: "Carbon Steel",
+    material: "Bronze/Brass",
     specs: [
-      { label: "SIZE RANGE", value: "NPS 1/2-48" },
-      { label: "PRESSURE CLASS", value: "ASME 150-2500" },
-      { label: "BODY MATERIAL", value: "Carbon Steel, Stainless Steel" },
+      { label: "SIZE RANGE", value: "1/2-2" },
+      { label: "Pressure Rating", value: "ASME 150-2500" },
+      { label: "BODY MATERIAL", value: "Bronze/Brass" },
       { label: "TEMPERATURE", value: "Up to 700°F (371°C)" },
-      { label: "STANDARDS", value: "API 600, ASME B16.34" },
+      { label: "STANDARDS", value: "EN12288-1, BS5154, MSS SP-80" },
     ],
     description:
-      "Reliable isolation valves engineered for tight shut-off across industrial piping systems, providing dependable performance in demanding applications.",
+      "High-performance gate valves engineered for reliable isolation in industrial piping systems, delivering robust sealing and longer service life.",
     features: [
       {
-        title: "Wedge-type disc",
-        description: "Superior sealing with minimal friction for smooth operation.",
+        title: "Non-rising stem design",
+        description:
+          "Ideal for compact installations where space is limited and consistent performance is required.",
       },
       {
-        title: "Flexible seating",
+        title: "Screwed bonnet construction",
         description:
-          "Adapts to temperature changes and pressure variations without leakage.",
+          "Provides secure sealing and easy access for maintenance without compromising integrity.",
       },
       {
-        title: "Long service life",
+        title: "Threaded connections",
         description:
-          "Durable construction minimizes maintenance and replacement costs.",
+          "Designed for standard piping systems to ensure reliable connections and simplified installation.",
       },
     ],
   },
@@ -101,7 +105,7 @@ export const products: Product[] = [
     material: "Ductile Iron",
     specs: [
       { label: "SIZE RANGE", value: "NPS 2-72" },
-      { label: "PRESSURE CLASS", value: "ASME 150-300" },
+      { label: "Pressure Rating", value: "ASME 150-300" },
       { label: "BODY MATERIAL", value: "Ductile Iron, Stainless Steel" },
       { label: "TEMPERATURE", value: "Up to 400°F (204°C)" },
       { label: "STANDARDS", value: "API 609, ASME B16.34" },
@@ -136,7 +140,7 @@ export const products: Product[] = [
     material: "Brass",
     specs: [
       { label: "SIZE RANGE", value: "1/4-4 inches" },
-      { label: "PRESSURE CLASS", value: "ASME 150-600" },
+      { label: "Pressure Rating", value: "ASME 150-600" },
       { label: "BODY MATERIAL", value: "Brass, Stainless Steel" },
       { label: "TEMPERATURE", value: "Up to 200°F (93°C)" },
       { label: "STANDARDS", value: "API 598, ASME B16.34" },
@@ -171,8 +175,8 @@ export const products: Product[] = [
     material: "Carbon Steel",
     specs: [
       { label: "SIZE RANGE", value: "NPS 1/2-12" },
-      { label: "PRESSURE CLASS", value: "ASME 150-2500" },
-      { label: "BODY MATERIAL", value: "Carbon Steel, Stainless Steel" },
+      { label: "Pressure Rating", value: "ASME 150-2500" },
+      { label: "BODY MATERIAL", value: "Bronze/Brass" },
       { label: "TEMPERATURE", value: "Up to 800°F (427°C)" },
       { label: "STANDARDS", value: "API 602, ASME B16.34" },
     ],
@@ -181,11 +185,13 @@ export const products: Product[] = [
     features: [
       {
         title: "Linear flow control",
-        description: "Precise stem movement provides accurate throttling capability.",
+        description:
+          "Precise stem movement provides accurate throttling capability.",
       },
       {
         title: "High rangeability",
-        description: "Wide control range from fully closed to fully open positions.",
+        description:
+          "Wide control range from fully closed to fully open positions.",
       },
       {
         title: "Minimal cavitation",
@@ -205,7 +211,7 @@ export const products: Product[] = [
     material: "Ductile Iron",
     specs: [
       { label: "SIZE RANGE", value: "NPS 1/2-24" },
-      { label: "PRESSURE CLASS", value: "ASME 150-2500" },
+      { label: "Pressure Rating", value: "ASME 150-2500" },
       { label: "BODY MATERIAL", value: "Ductile Iron, Stainless Steel" },
       { label: "TEMPERATURE", value: "Up to 600°F (316°C)" },
       { label: "STANDARDS", value: "API 594, ASME B16.34" },
@@ -224,7 +230,8 @@ export const products: Product[] = [
       },
       {
         title: "Durable seating surfaces",
-        description: "Hardened internals withstand repeated cycling and erosion.",
+        description:
+          "Hardened internals withstand repeated cycling and erosion.",
       },
     ],
   },
@@ -239,8 +246,8 @@ export const products: Product[] = [
     material: "Carbon Steel",
     specs: [
       { label: "SIZE RANGE", value: "NPS 1/2-48" },
-      { label: "PRESSURE CLASS", value: "ASME 150-2500" },
-      { label: "BODY MATERIAL", value: "Carbon Steel, Stainless Steel" },
+      { label: "Pressure Rating", value: "ASME 150-2500" },
+      { label: "BODY MATERIAL", value: "Bronze/Brass" },
       { label: "SCREEN MESH", value: "100-400 microns" },
       { label: "STANDARDS", value: "ASTM B16.34" },
     ],
@@ -249,7 +256,8 @@ export const products: Product[] = [
     features: [
       {
         title: "High dirt capacity",
-        description: "Large screen area minimizes clogging and maintenance intervals.",
+        description:
+          "Large screen area minimizes clogging and maintenance intervals.",
       },
       {
         title: "Low pressure drop",

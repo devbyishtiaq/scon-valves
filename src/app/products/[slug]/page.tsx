@@ -14,12 +14,7 @@ import { useParams, notFound } from "next/navigation"
 
 const featureIcons = [RightTickIcon, SecurityIcon, ProgressIcon]
 
-const tabs = [
-  "FEATURES & BENEFITS",
-  "DOCUMENTS",
-  "PRODUCT LINE",
-  "CONTACT",
-]
+const tabs = ["FEATURES & BENEFITS", "DOCUMENTS", "PRODUCT LINE", "CONTACT"]
 
 export default function ProductDetailPage() {
   const params = useParams()
@@ -56,7 +51,10 @@ export default function ProductDetailPage() {
               <div className="flex flex-col justify-center">
                 <div className="space-y-5 sm:space-y-6">
                   <div className="flex items-center gap-2 text-xs font-medium tracking-[0.16em] text-zinc-500 uppercase">
-                    <Link href="/" className="transition-colors hover:text-zinc-800">
+                    <Link
+                      href="/"
+                      className="transition-colors hover:text-zinc-800"
+                    >
                       Home
                     </Link>
                     <ChevronRight className="size-3" />
@@ -128,7 +126,10 @@ export default function ProductDetailPage() {
 
                   <div className="mt-8 space-y-6">
                     {product.features.map((feature, idx) => (
-                      <div key={feature.title} className="flex items-start gap-4">
+                      <div
+                        key={feature.title}
+                        className="flex items-start gap-4"
+                      >
                         <div className="flex size-6 shrink-0 items-center justify-center">
                           <Image
                             src={featureIcons[idx % featureIcons.length]}
@@ -152,29 +153,29 @@ export default function ProductDetailPage() {
                 </div>
 
                 <aside className="border border-zinc-200/80 bg-white p-6 sm:p-8">
-                    <h3 className="mb-6 font-satoshi text-base font-bold text-[#C0302C]">
-                      Product Details
-                    </h3>
+                  <h3 className="mb-6 font-satoshi text-base font-bold text-[#C0302C]">
+                    Product Details
+                  </h3>
 
-                    <dl>
-                      {product.specs.map((spec, idx) => (
-                        <div
-                          key={spec.label}
-                          className={`grid grid-cols-[minmax(0,0.8fr)_minmax(0,1.35fr)] items-baseline gap-4 py-4 ${
-                            idx !== product.specs.length - 1
-                              ? "border-b border-zinc-100"
-                              : ""
-                          }`}
-                        >
-                          <dt className="text-[10px] font-semibold tracking-[0.1em] text-zinc-400 uppercase">
-                            {spec.label}
-                          </dt>
-                          <dd className="text-right text-xs font-semibold text-[#1A1F26] sm:text-sm">
-                            {spec.value}
-                          </dd>
-                        </div>
-                      ))}
-                    </dl>
+                  <dl>
+                    {product.specs.map((spec, idx) => (
+                      <div
+                        key={spec.label}
+                        className={`grid grid-cols-[minmax(0,0.8fr)_minmax(0,1.35fr)] items-baseline gap-4 py-4 ${
+                          idx !== product.specs.length - 1
+                            ? "border-b border-zinc-100"
+                            : ""
+                        }`}
+                      >
+                        <dt className="text-[10px] font-semibold tracking-[0.1em] text-zinc-400 uppercase">
+                          {spec.label}
+                        </dt>
+                        <dd className="text-right text-xs font-semibold text-[#1A1F26] sm:text-sm">
+                          {spec.value}
+                        </dd>
+                      </div>
+                    ))}
+                  </dl>
                 </aside>
               </div>
             </div>
@@ -188,7 +189,10 @@ export default function ProductDetailPage() {
               Ready to Request a Quote?
             </h2>
             <p className="text-gray-300 text-base mb-10 leading-relaxed">
-              Contact our sales team to discuss your {product.category.toLowerCase()} requirements and discover how {product.name} can deliver precision and reliability for your application.
+              Contact our sales team to discuss your{" "}
+              {product.category.toLowerCase()} requirements and discover how{" "}
+              {product.name} can deliver precision and reliability for your
+              application.
             </p>
             <div className="flex gap-4 justify-center">
               <button className="px-8 py-3 bg-[#C0302C] text-white font-bold text-sm tracking-wide rounded hover:bg-red-800 transition-colors duration-200">
