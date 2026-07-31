@@ -8,9 +8,7 @@ import { useEffect, useId, useRef, useState } from "react"
 
 import MainLogo from "@/assets/images/main-logo.png"
 import { Button } from "@/components/ui/button"
-import {
-  productCategories,
-} from "@/data/product-categories"
+import { productCategories } from "@/data/product-categories"
 import { cn } from "@/lib/utils"
 
 const navLinks = [
@@ -317,7 +315,7 @@ export function Header({ className }: { className?: string }) {
                 "rounded-lg border border-zinc-300 bg-white font-medium text-zinc-900 shadow-none hover:bg-zinc-50"
             )}
           >
-            <Link href="#login">Login</Link>
+            {/* <Link href="#login">Login</Link> */}
           </Button>
 
           <button
@@ -562,9 +560,9 @@ export function Header({ className }: { className?: string }) {
                   "rounded-lg border border-zinc-300 bg-white font-medium text-zinc-900 shadow-none hover:bg-zinc-50"
               )}
             >
-              <Link href="#login" onClick={closeMobile}>
+              {/* <Link href="#login" onClick={closeMobile}>
                 Login
-              </Link>
+              </Link> */}
             </Button>
           </div>
         </aside>

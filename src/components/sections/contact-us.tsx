@@ -19,12 +19,12 @@ const CONTACT_DETAILS = [
   },
   {
     title: "Phone & Fax",
-    lines: ["+92-42-35714301-5", "Fax: +92-42-35714300"],
+    lines: ["+92-42-35877656, 35877657", "+92(0)320-9919913, 14, 15"],
     icon: Phone,
   },
   {
     title: "Email Support",
-    lines: ["sales@stivalves.com", "marketing@stivalves.com"],
+    lines: ["sales@sconvalve.com.pk", "www.sconvalve.com.pk"],
     icon: Mail,
   },
 ] as const
@@ -201,7 +201,7 @@ export function ContactUs({ className }: ContactUsProps) {
                   />
                 </div>
                 <span className="absolute top-2 left-0 -translate-x-1/2 whitespace-nowrap rounded-md bg-white/95 px-2 py-0.5 text-[10px] font-bold tracking-wide text-zinc-800 uppercase shadow-sm">
-                    Main Gulberg
+                  Main Gulberg
                 </span>
               </div>
 

@@ -37,9 +37,9 @@ export function Hero({ className }: HeroProps) {
           </p>
 
           <h1 className="font-satoshi text-4xl leading-[1.05] font-bold tracking-wide text-balance uppercase sm:text-5xl md:text-6xl lg:text-7xl">
-            Engineering your
+            GET BETTER QUALITY WITH US
             <br />
-            dreams with us
+            {/* dreams with us */}
           </h1>
 
           <div className="mt-8 motion-safe:animate-[hero-rise_0.9s_ease-out_0.2s_both] md:mt-10">

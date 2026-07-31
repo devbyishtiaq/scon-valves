@@ -12,7 +12,7 @@ import Image from "next/image"
 const STATS = [
   {
     label: "Installed On Over",
-    value: "900+ PROJECTS",
+    value: "1000+ PROJECTS",
   },
   {
     label: "Warranty-Free Replacement",
