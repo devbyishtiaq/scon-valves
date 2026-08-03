@@ -20,7 +20,7 @@ export function Section({ children, className, ...props }: SectionProps) {
       )}
       {...props}
     >
-      {children}
+      <div className="mx-auto w-full max-w-7xl">{children}</div>
     </section>
   )
 }

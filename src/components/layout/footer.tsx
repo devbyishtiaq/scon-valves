@@ -21,8 +21,8 @@ const SITEMAP = [
 const CONTACT = [
   "+92 42 35877656–57",
   "+92 320 9919912,13,14",
-  "sales@sfrvalves.com",
-  "marketing@sfrvalves.com",
+  "sales@sconvalve.com.pk",
+  "www.sconvalve.com.pk",
 ] as const
 
 function FacebookIcon({ className }: { className?: string }) {

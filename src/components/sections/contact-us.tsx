@@ -35,12 +35,12 @@ const TEAM: {
   image: StaticImageData
 }[] = [
   {
-    name: "Ali Raza",
+    name: "Farhan Nasar",
     role: "Director Sales & Marketing",
     image: person1,
   },
   {
-    name: "Sara Khan",
+    name: "Hassan Nasar",
     role: "Export Manager",
     image: person2,
   },
@@ -78,9 +78,9 @@ export function ContactUs({ className }: ContactUsProps) {
       id="contact"
       className={cn("overflow-x-hidden bg-zinc-100/90", className)}
     >
-      <div className="w-full min-w-0 max-w-full rounded-[14px] border border-[#D6D6D6] p-2">
-        <div className="min-w-0 max-w-full overflow-hidden rounded-[20px] p-3 sm:rounded-[28px] sm:p-5">
-          <div className="grid min-w-0 gap-6 lg:grid-cols-2 lg:gap-10">
+      <div className="w-full min-w-0 max-w-full rounded-[14px] border border-[#D6D6D6] p-2 sm:p-3">
+        <div className="min-w-0 max-w-full overflow-hidden rounded-[20px] p-2 sm:rounded-[28px] sm:p-3">
+          <div className="grid min-w-0 gap-6 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-8">
             {/* Left: contact info */}
             <div className="flex min-w-0 flex-col gap-4 rounded-xl bg-[#F8F8F8] p-3 sm:gap-5 sm:p-4">
               <div className="min-w-0">
@@ -166,11 +166,11 @@ export function ContactUs({ className }: ContactUsProps) {
             </div>
 
             {/* Right: map */}
-            <div className="relative min-h-[28rem] min-w-0 overflow-hidden rounded-[20px] bg-white shadow-[0_8px_24px_rgba(15,23,42,0.06)] lg:min-h-full">
+            <div className="relative min-h-[28rem] min-w-0 overflow-hidden rounded-[20px] bg-white shadow-[0_8px_24px_rgba(15,23,42,0.06)] lg:min-h-[34rem]">
               <iframe
                 title="SCONVALVES location map — Main Gulberg, Lahore"
                 src={MAP_EMBED_SRC}
-                className="absolute inset-0 h-full w-full max-w-full border-0 grayscale-[20%] contrast-[1.05]"
+                className="absolute inset-0 h-full w-full border-0 grayscale-[20%] contrast-[1.05]"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
               />

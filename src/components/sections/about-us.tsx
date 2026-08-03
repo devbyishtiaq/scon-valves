@@ -1,6 +1,5 @@
 "use client"
 
-import { Sparkle } from "lucide-react"
 import { motion, useReducedMotion } from "motion/react"
 
 import { Section } from "@/components/layout/section"
