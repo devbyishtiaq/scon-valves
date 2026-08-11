@@ -124,11 +124,11 @@ export function Header({ className }: { className?: string }) {
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-4 px-5 md:px-8">
         <Link href="/" className="shrink-0" aria-label="SCONVALVES home">
           <Image
-            width={160}
+            width={260}
             height={29}
             src={MainLogo}
             alt="SCONVALVES"
-            className="h-[29px] w-auto"
+            className="h-[55px] w-auto"
             style={{ width: "auto", height: "auto" }}
           />
         </Link>

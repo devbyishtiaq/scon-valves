@@ -53,13 +53,15 @@ export function Machining({
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         >
-          <Image
-            src={imageSrc}
-            alt="CNC machining equipment used for high-quality valve production"
-            className="object-cover translate-y-8"
-            height={472}
-            sizes="(max-width: 768px) 100vw, 50vw"
-          />
+          <div className="relative h-full w-full overflow-hidden rounded-[1.75rem] border-2 border-gray-300">
+            <Image
+              src={imageSrc}
+              alt="CNC machining equipment used for high-quality valve production"
+              fill
+              className="object-cover p-1 rounded-[1.75rem]"
+              sizes="(max-width: 768px) 100vw, 50vw"
+            />
+          </div>
         </motion.div>
 
         <motion.div

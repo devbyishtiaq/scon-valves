@@ -35,7 +35,7 @@ export function ProductDetailContent({ slug }: ProductDetailContentProps) {
         <section className="bg-white py-12 sm:py-16 lg:py-20">
           <div className="mx-auto max-w-7xl px-5 md:px-8">
             <div className="grid items-center gap-10 md:grid-cols-2 lg:gap-16">
-              <div className="relative mx-auto aspect-square w-full max-w-[34rem] overflow-hidden bg-white">
+              <div className="relative mx-auto aspect-square w-full max-w-[24rem] overflow-hidden bg-white">
                 <Image
                   src={product.image}
                   alt={product.name}
@@ -72,7 +72,7 @@ export function ProductDetailContent({ slug }: ProductDetailContentProps) {
                     {product.category}
                   </p>
 
-                  <h1 className="max-w-2xl font-satoshi text-4xl leading-[1.08] font-bold tracking-[-0.035em] text-[#191C1E] sm:text-5xl lg:text-[3.25rem]">
+                  <h1 className="max-w-2xl font-satoshi text-4xl leading-[1.08] font-bold tracking-[-0.035em] text-[#191C1E] sm:text-4xl">
                     {product.name} {product.tagline}
                   </h1>
 
@@ -214,10 +214,10 @@ export function ProductDetailContent({ slug }: ProductDetailContentProps) {
                 {[
                   "Product Datasheet",
                   "Technical Specifications",
-                  "Installation Guide",
-                  "Maintenance Manual",
-                  "API Certifications",
-                  "Material Certificates",
+                  // "Installation Guide",
+                  // "Maintenance Manual",
+                  // "API Certifications",
+                  // "Material Certificates",
                 ].map((doc, idx) => (
                   <div
                     key={idx}

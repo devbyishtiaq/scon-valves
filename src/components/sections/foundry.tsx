@@ -3,7 +3,7 @@
 import { motion, useReducedMotion } from "motion/react"
 import Image, { type StaticImageData } from "next/image"
 
-import foundryImage from "@/assets/images/foundry.jpg"
+import foundryImage from "@/assets/images/people_working_avatar.jpeg"
 import { Section } from "@/components/layout/section"
 import { MainHeading } from "@/components/ui/main-heading"
 import { cn } from "@/lib/utils"
@@ -36,19 +36,21 @@ export function Foundry({ imageSrc = foundryImage, className }: FoundryProps) {
     <Section id="foundry" className={cn("bg-white", className)}>
       <div className="grid w-full items-center gap-10 md:grid-cols-2 md:gap-12 lg:gap-16">
         <motion.div
-          className="relative aspect-[4/3] w-full overflow-hidden rounded-[1.75rem] lg:rounded-[2rem]"
+          className="aspect-[4/3] w-full overflow-hidden rounded-[1.75rem] lg:rounded-[2rem]"
           initial={imageMotion.initial}
           whileInView={imageMotion.whileInView}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         >
-          <Image
-            src={imageSrc}
-            alt="NO-BAKE foundry mold heated during OEM casting production"
-            fill
-            className="object-cover"
-            sizes="(max-width: 768px) 100vw, 50vw"
-          />
+          <div className="relative h-full w-full overflow-hidden rounded-[1.75rem] border-2 border-gray-300">
+            <Image
+              src={imageSrc}
+              alt="NO-BAKE foundry mold heated during OEM casting production"
+              fill
+              className="object-cover p-1 rounded-[1.75rem]"
+              sizes="(max-width: 768px) 100vw, 50vw"
+            />
+          </div>
         </motion.div>
 
         <motion.div
@@ -57,7 +59,7 @@ export function Foundry({ imageSrc = foundryImage, className }: FoundryProps) {
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.08 }}
         >
-          <MainHeading text="Foundry - OEM Castings" />
+          <MainHeading className="text-[50px]!" text="Foundry - OEM Castings" />
 
           <div className="mt-4 space-y-4 md:mt-5">
             {PARAGRAPHS.map((paragraph) => (
