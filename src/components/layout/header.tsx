@@ -1,6 +1,6 @@
 "use client"
 
-import { ChevronDown, ChevronRight, Menu, Search, X } from "lucide-react"
+import { ChevronDown, ChevronRight, Menu, X } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
@@ -121,15 +121,16 @@ export function Header({ className }: { className?: string }) {
         className
       )}
     >
-      <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-4 px-5 md:px-8">
-        <Link href="/" className="shrink-0" aria-label="SCONVALVES home">
+      <div className="mx-auto flex w-full max-w-[1680px] items-center justify-between gap-4 px-4 sm:px-6 md:px-8 lg:px-10">
+        <Link href="/" className="min-w-0" aria-label="SCONVALVES home">
           <Image
-            width={260}
-            height={29}
             src={MainLogo}
             alt="SCONVALVES"
-            className="h-[55px] w-auto"
-            style={{ width: "auto", height: "auto" }}
+            priority
+            className={cn(
+              "h-8 w-auto max-w-full min-w-0 object-contain object-left sm:h-10 md:h-12 lg:h-12 xl:h-14 2xl:h-16",
+              isHomePage && "drop-shadow-[0_2px_10px_rgba(0,0,0,0.55)]"
+            )}
           />
         </Link>
 
@@ -138,7 +139,7 @@ export function Header({ className }: { className?: string }) {
           className={cn(
             "hidden items-center rounded-xl px-1.5 py-1 lg:flex",
             isHomePage
-              ? "border border-white/25 bg-white/10 backdrop-blur-md"
+              ? "border border-white/20 bg-black/35 shadow-lg shadow-black/20 backdrop-blur-md"
               : "gap-0"
           )}
         >
@@ -291,33 +292,7 @@ export function Header({ className }: { className?: string }) {
           })}
         </nav>
 
-        <div className="flex items-center gap-2.5 md:gap-3">
-          <button
-            type="button"
-            aria-label="Search"
-            className={cn(
-              "inline-flex size-9 items-center justify-center rounded-full transition-colors",
-              isHomePage
-                ? "text-white hover:bg-white/15"
-                : "text-gray-700 hover:bg-gray-200/50"
-            )}
-          >
-            <Search className="size-5" />
-          </button>
-
-          <Button
-            asChild
-            variant="secondary"
-            size="sm"
-            className={cn(
-              "hidden sm:inline-flex",
-              isProductPage &&
-                "rounded-lg border border-zinc-300 bg-white font-medium text-zinc-900 shadow-none hover:bg-zinc-50"
-            )}
-          >
-            {/* <Link href="#login">Login</Link> */}
-          </Button>
-
+        <div className="flex items-center gap-2.5 md:gap-3 lg:hidden">
           <button
             type="button"
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
@@ -376,12 +351,9 @@ export function Header({ className }: { className?: string }) {
             )}
           >
             <Image
-              width={140}
-              height={26}
               src={MainLogo}
               alt="SCONVALVES"
-              className="h-6 w-auto"
-              style={{ width: "auto", height: "auto" }}
+              className="h-7 w-auto max-w-full min-w-0 object-contain object-left"
             />
             <button
               type="button"
