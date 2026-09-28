@@ -64,9 +64,38 @@ const MAP_FEATURES = [
   },
 ] as const
 
-/** OpenStreetMap embed — Main Gulberg, Lahore */
-const MAP_EMBED_SRC =
-  "https://www.openstreetmap.org/export/embed.html?bbox=74.335%2C31.505%2C74.360%2C31.525&layer=mapnik&marker=31.515%2C74.3475"
+/**
+ * Head office coordinates.
+ *
+ * TODO: confirm against the Google Maps listing. Nominatim has no entry for
+ * the building itself, so this resolves to Main Boulevard Gulberg rather than
+ * 32-B1 exactly. To correct it: open the office on Google Maps, right-click the
+ * pin, click the lat/long to copy, and paste the two numbers below — the bbox
+ * and the marker both derive from this one pair.
+ */
+const OFFICE = { lat: 31.51859, lng: 74.34539 }
+
+/** Half-width of the viewport around the office, in degrees. */
+const MAP_SPAN = { lng: 0.008, lat: 0.005 }
+
+const MAP_EMBED_SRC = (() => {
+  const bbox = [
+    OFFICE.lng - MAP_SPAN.lng,
+    OFFICE.lat - MAP_SPAN.lat,
+    OFFICE.lng + MAP_SPAN.lng,
+    OFFICE.lat + MAP_SPAN.lat,
+  ].join(",")
+
+  // `marker` is drawn by OpenStreetMap itself, so it stays anchored to these
+  // coordinates when the visitor zooms or pans.
+  return `https://www.openstreetmap.org/export/embed.html?bbox=${encodeURIComponent(
+    bbox
+  )}&layer=mapnik&marker=${OFFICE.lat}%2C${OFFICE.lng}`
+})()
+
+const DIRECTIONS_HREF =
+  "https://www.google.com/maps/search/?api=1&query=" +
+  encodeURIComponent("Scon Valves Pvt Ltd, 32-B1 Main Gulberg, Lahore, 54400")
 
 type ContactUsProps = {
   className?: string
@@ -186,24 +215,16 @@ export function ContactUs({ className }: ContactUsProps) {
                   <p className="mt-0.5 text-xs leading-relaxed break-words text-zinc-500">
                     32-B1, Main Gulberg, Lahore, Pakistan
                   </p>
+                  <Link
+                    href={DIRECTIONS_HREF}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-1.5 inline-block text-xs font-medium text-(--brand-red) underline-offset-2 hover:underline"
+                  >
+                    Get directions
+                  </Link>
                 </div>
               </ContactCard>
-
-              <div className="pointer-events-none absolute top-1/2 left-1/2 z-10">
-                <div className="absolute bottom-0 left-0 -translate-x-1/2">
-                  <MapPin
-                    className="size-12 fill-(--brand-red) text-(--brand-red) drop-shadow-md"
-                    strokeWidth={1.5}
-                  />
-                  <span
-                    aria-hidden
-                    className="absolute top-[0.7rem] left-1/2 size-3 -translate-x-1/2 rounded-full bg-white"
-                  />
-                </div>
-                <span className="absolute top-2 left-0 -translate-x-1/2 whitespace-nowrap rounded-md bg-white/95 px-2 py-0.5 text-[10px] font-bold tracking-wide text-zinc-800 uppercase shadow-sm">
-                  Main Gulberg
-                </span>
-              </div>
 
               <div className="absolute inset-x-2 bottom-2 z-10 min-w-0 rounded-[16px] bg-white/95 p-2.5 shadow-[0_8px_24px_rgba(15,23,42,0.1)] backdrop-blur-sm sm:inset-x-4 sm:bottom-4 sm:p-4">
                 <div className="grid min-w-0 gap-2.5 sm:grid-cols-3 sm:gap-2">
