@@ -190,6 +190,44 @@
   background-size: cover
 }
 
+/**
+ * Section textures for the two dark navy sections. Both are pure CSS
+ * gradients — no image requests — and are deliberately different from each
+ * other and from the footer's world map.
+ *
+ * About Us: a blueprint grid with a brand-red glow bleeding in from the top
+ * left, picking up the engineering-drawing feel of the products.
+ */
+.about-bg {
+  background-color: #242f3e;
+  background-image:
+    radial-gradient(70% 95% at 10% -15%, rgba(178, 34, 34, 0.26), transparent 62%),
+    radial-gradient(55% 75% at 105% 110%, rgba(125, 165, 215, 0.14), transparent 65%),
+    linear-gradient(rgba(255, 255, 255, 0.038) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.038) 1px, transparent 1px);
+  background-size:
+    100% 100%,
+    100% 100%,
+    72px 72px,
+    72px 72px;
+}
+
+/**
+ * ISO Certification: an overhead spotlight with a fine diagonal hatch, so the
+ * certificate scans read as if lit on a desk rather than floating on flat navy.
+ */
+.certificates-bg {
+  background-color: #242f3e;
+  background-image:
+    radial-gradient(60% 65% at 50% -10%, rgba(255, 255, 255, 0.11), transparent 70%),
+    radial-gradient(45% 55% at -5% 105%, rgba(178, 34, 34, 0.18), transparent 70%),
+    repeating-linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.028) 0 1px,
+      transparent 1px 12px
+    );
+}
+
 .service-card:hover {
   box-shadow: rgba(255, 0, 0, 0.12) 0px 2px 4px 0px,
     rgba(255, 0, 0, 0.32) 0px 2px 16px 0px;

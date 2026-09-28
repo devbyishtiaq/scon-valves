@@ -37,7 +37,7 @@ export function AboutUs({ className }: AboutUsProps) {
   }
 
   return (
-    <Section id="about" className={cn("bg-[#242f3e] text-white", className)}>
+    <Section id="about" className={cn("about-bg text-white", className)}>
       <div className="">
         <motion.div
           initial={leftMotion.initial}
@@ -51,7 +51,7 @@ export function AboutUs({ className }: AboutUsProps) {
           <div className="inline-block">
             <MainHeading
               text="About Us"
-              className="text-white normal-case font-semibold"
+              className="text-white normal-case"
             />
             <span className="mt-2 block h-px w-16 bg-white/90" aria-hidden />
           </div>

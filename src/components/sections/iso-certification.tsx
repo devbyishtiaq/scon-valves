@@ -1,16 +1,35 @@
 "use client"
 
 import { bookIcons } from "@/assets/icons"
-import { ActiveRightSlider } from "@/components/ui/active-right-slider"
 import { Section } from "@/components/layout/section"
+import {
+  CaptionedImageGrid,
+  type CaptionedImage,
+} from "@/components/ui/captioned-image-grid"
 import { MainHeading } from "@/components/ui/main-heading"
 import { cn } from "@/lib/utils"
 
-const CERTIFICATES = [
-  { src: bookIcons[0], alt: "ISO 9001:2015 certificate — book 1" },
-  { src: bookIcons[1], alt: "ISO 9001:2015 certificate — book 2" },
-  { src: bookIcons[2], alt: "ISO 9001:2015 certificate — book 3" },
-  { src: bookIcons[3], alt: "ISO 9001:2015 certificate — book 4" },
+const CERTIFICATES: CaptionedImage[] = [
+  {
+    src: bookIcons[0],
+    alt: "ISO 9001:2015 certificate — book 1",
+    caption: "ISO 9001:2015 — OEM castings, valves & flanges (Bureau Veritas)",
+  },
+  {
+    src: bookIcons[1],
+    alt: "ISO 9001:2015 certificate — book 2",
+    caption: "ISO 9001:2015 — Scon valve & flange manufacturing (Bureau Veritas)",
+  },
+  {
+    src: bookIcons[2],
+    alt: "ISO 9001:2015 certificate — book 3",
+    caption: "ISO 9001:2015 — valves, flanges & castings (RICI, IAS accredited)",
+  },
+  {
+    src: bookIcons[3],
+    alt: "ISO 9001:2015 certificate — book 4",
+    caption: "ISO 9001:2015 — industrial valves & in-house foundry (TÜV Austria)",
+  },
 ]
 
 type IsoCertificationProps = {
@@ -19,19 +38,18 @@ type IsoCertificationProps = {
 
 export function IsoCertification({ className }: IsoCertificationProps) {
   return (
-    <Section id="certificates" className={cn("bg-[#242f3e]", className)}>
+    <Section id="certificates" className={cn("certificates-bg", className)}>
       <div className="w-full">
         <MainHeading className="text-white" text="ISO Certification" />
 
-        <ActiveRightSlider
+        <CaptionedImageGrid
           items={CERTIFICATES}
-          className="mt-0 md:mt-6"
-          trackClassName="min-h-[412px] justify-start gap-4 md:gap-5"
-          itemClassName="rounded-xl bg-transparent shadow-none"
+          className="mt-8 md:mt-12"
+          columnsClassName="grid-cols-2 lg:grid-cols-4"
+          tileClassName="aspect-[3/4] bg-white/5"
           imageClassName="object-contain object-center"
-          navClassName="justify-center"
-          prevButtonClassName="border-white/50 bg-transparent text-white hover:bg-white/10"
-          nextButtonClassName="bg-(--brand-red) text-white hover:bg-(--brand-red-hover)"
+          captionClassName="text-white/70"
+          unoptimized
         />
       </div>
     </Section>

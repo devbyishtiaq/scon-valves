@@ -59,7 +59,7 @@ export function Foundry({ imageSrc = foundryImage, className }: FoundryProps) {
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.08 }}
         >
-          <MainHeading className="text-[50px]!" text="Foundry - OEM Castings" />
+          <MainHeading text="Foundry - OEM Castings" />
 
           <div className="mt-4 space-y-4 md:mt-5">
             {PARAGRAPHS.map((paragraph) => (
