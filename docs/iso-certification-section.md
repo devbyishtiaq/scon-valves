@@ -28,12 +28,22 @@ The `ActiveRightSlider` component is **still in the repo**, unused, at
 ## What stayed the same
 
 - Section id `#certificates` (the header nav links to it).
-- Section background: `bg-[#242f3e]` (dark navy).
 - Heading: `<MainHeading className="text-white" text="ISO Certification" />`.
-- Sources: `bookIcons` from `src/assets/icons/index.ts` — `book-1.svg` …
-  `book-4.svg`. These are SVG wrappers around embedded raster scans, ~320–545KB
-  each, with a 3:4 viewBox (`361×470` for book 1, `244×318` for the rest).
-  They are rendered with `unoptimized` because next/image cannot optimise SVG.
+- Section background: still `#242f3e`, now via the `.certificates-bg` class
+  (spotlight plus diagonal hatch) rather than a flat `bg-[#242f3e]`.
+
+### Sources were replaced on 2026-10-05
+
+Previously `bookIcons` from `src/assets/icons/index.ts` — `book-1.svg` …
+`book-4.svg`, SVG wrappers around embedded raster scans, 320–545KB each,
+rendered with `unoptimized` because next/image cannot optimise SVG. That is
+the path that was hard to find: the `certificates/cert-*.jpg` files sitting
+next to them were never actually referenced.
+
+Now `src/assets/images/certificates/cert-1.jpeg` … `cert-4.jpeg`, real JPEGs
+at roughly 1130×1600 (3:4), 217–292KB each, optimised normally by next/image.
+The `bookIcons` export has been removed; the four `book-*.svg` files are still
+on disk, unused, and can be deleted to reclaim ~1.6MB.
 
 ---
 
@@ -92,7 +102,6 @@ fixed tile sizes, accessibility attributes) is documented in
   tileClassName="aspect-[3/4] bg-white/5"
   imageClassName="object-contain object-center"
   captionClassName="text-white/70"
-  unoptimized
 />
 ```
 
@@ -100,19 +109,24 @@ fixed tile sizes, accessibility attributes) is documented in
 the fixed 3:4 tile; the faint `bg-white/5` gives the tile a visible edge on the
 dark background where a scan does not fill it.
 
-### Caption copy — please verify
+### Order and caption copy
 
-The captions were transcribed from the certificate scans and are a best reading
-of low-resolution images. Confirm against the originals before launch:
+Tiles run **oldest to newest by the issue date printed on each scan**, so the
+row reads as an unbroken certification history ending on the current
+certificate. The file numbering runs the other way, which is why
+`iso-certification.tsx` imports them under year aliases.
 
-| # | File | Caption |
-|---|---|---|
-| 1 | `book-1.svg` | ISO 9001:2015 — OEM castings, valves & flanges (Bureau Veritas) |
-| 2 | `book-2.svg` | ISO 9001:2015 — Scon valve & flange manufacturing (Bureau Veritas) |
-| 3 | `book-3.svg` | ISO 9001:2015 — valves, flanges & castings (RICI, IAS accredited) |
-| 4 | `book-4.svg` | ISO 9001:2015 — industrial valves & in-house foundry (TÜV Austria) |
+| Position | File | Body | Issued | Valid till |
+|---|---|---|---|---|
+| 1 | `cert-4.jpeg` | RICI (IAS accredited), cert. PK220001 | 2022-05-26 | 2023-04-25 |
+| 2 | `cert-3.jpeg` | RICI, cert. PK220001 | 2023-04-25 | 2024-04-25 |
+| 3 | `cert-2.jpeg` | RICI, cert. PK220001 | 2024-03-12 | 2025-04-25 |
+| 4 | `cert-1.jpeg` | TÜV Austria, reg. TPAK-030188725-QMS | 2025-03-28 | 2028-03-27 |
 
-Certificate 4 (TÜV Austria, reg. TPAK-030188725-QMS) shows a validity date of
-2028-03-27; certificates 1–3 show expiry dates that have already passed
-(2019, 2022 and 2024-04-25 respectively). Worth checking whether the older
-scans should be replaced with current ones before this section goes live.
+To show newest first instead, reverse the `CERTIFICATES` array — nothing else
+depends on the order.
+
+**Expiry:** only the TÜV Austria certificate is currently valid (to 2028-03-27).
+The three RICI scans all expired in 2023, 2024 and 2025 respectively. Showing
+them as a history is a deliberate choice; if they should be hidden once lapsed,
+drop them from the array.
