@@ -20,7 +20,7 @@ const SITEMAP = [
 
 const CONTACT = [
   "+92 42 35877656–57",
-  "+92 320 9919912,13,14",
+  "+92 320 9919913,14,15",
   "sales@sconvalve.com.pk",
   "www.sconvalve.com.pk",
 ] as const
