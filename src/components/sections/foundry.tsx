@@ -5,7 +5,9 @@ import Image, { type StaticImageData } from "next/image"
 
 import foundryImage from "@/assets/images/people_working_avatar.jpeg"
 import { Section } from "@/components/layout/section"
+import { CloudinaryVideo } from "@/components/ui/cloudinary-video"
 import { MainHeading } from "@/components/ui/main-heading"
+import { getVideo } from "@/lib/cloudinary"
 import { cn } from "@/lib/utils"
 
 const PARAGRAPHS = [
@@ -21,6 +23,7 @@ type FoundryProps = {
 
 export function Foundry({ imageSrc = foundryImage, className }: FoundryProps) {
   const reduceMotion = useReducedMotion()
+  const video = getVideo("foundry")
 
   const imageMotion = {
     initial: reduceMotion ? false : { opacity: 0, x: -64 },
@@ -50,6 +53,14 @@ export function Foundry({ imageSrc = foundryImage, className }: FoundryProps) {
               className="object-cover p-1 rounded-[1.75rem]"
               sizes="(max-width: 768px) 100vw, 50vw"
             />
+
+            {video ? (
+              <CloudinaryVideo
+                sources={video.sources}
+                lazy
+                className="rounded-[1.75rem] p-1"
+              />
+            ) : null}
           </div>
         </motion.div>
 

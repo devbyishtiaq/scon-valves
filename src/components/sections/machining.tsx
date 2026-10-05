@@ -7,7 +7,9 @@ import Checkicon from "@/assets/images/check-icon.svg"
 
 import machiningImage from "@/assets/images/maching-img.png"
 import { Section } from "@/components/layout/section"
+import { CloudinaryVideo } from "@/components/ui/cloudinary-video"
 import { MainHeading } from "@/components/ui/main-heading"
+import { getVideo } from "@/lib/cloudinary"
 import { cn } from "@/lib/utils"
 
 const BODY_COPY =
@@ -32,6 +34,7 @@ export function Machining({
   className,
 }: MachiningProps) {
   const reduceMotion = useReducedMotion()
+  const video = getVideo("machining")
 
   const imageMotion = {
     initial: reduceMotion ? false : { opacity: 0, x: -64 },
@@ -61,6 +64,14 @@ export function Machining({
               className="object-cover p-1 rounded-[1.75rem]"
               sizes="(max-width: 768px) 100vw, 50vw"
             />
+
+            {video ? (
+              <CloudinaryVideo
+                sources={video.sources}
+                lazy
+                className="rounded-[1.75rem] p-1"
+              />
+            ) : null}
           </div>
         </motion.div>
 

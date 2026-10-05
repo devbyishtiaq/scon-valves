@@ -2,9 +2,9 @@ import Link from "next/link"
 import Image from "next/image"
 
 import heroBg from "@/assets/images/hero-bg.webp"
-import { HeroVideo } from "@/components/sections/hero-video"
 import { Button } from "@/components/ui/button"
-import { getHeroVideo } from "@/lib/cloudinary"
+import { CloudinaryVideo } from "@/components/ui/cloudinary-video"
+import { getVideo } from "@/lib/cloudinary"
 import { cn } from "@/lib/utils"
 
 type HeroProps = {
@@ -12,7 +12,7 @@ type HeroProps = {
 }
 
 export function Hero({ className }: HeroProps) {
-  const video = getHeroVideo()
+  const video = getVideo("hero")
 
   return (
     <section
@@ -36,7 +36,13 @@ export function Hero({ className }: HeroProps) {
           sizes="100vw"
         />
 
-        {video ? <HeroVideo poster={video.poster} sources={video.sources} /> : null}
+        {video ? (
+          <CloudinaryVideo
+            poster={video.poster}
+            sources={video.sources}
+            minWidth="(min-width: 768px)"
+          />
+        ) : null}
 
         {/* Flat tint over the whole frame. Knocks back the clip's own burned-in
             captions and keeps contrast steady as the footage brightens. */}
