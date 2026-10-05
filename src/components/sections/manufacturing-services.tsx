@@ -1,10 +1,15 @@
 "use client"
 
 import { motion, useReducedMotion } from "motion/react"
-import Image from "next/image"
+import Image, { type StaticImageData } from "next/image"
 import Link from "next/link"
 
-import { manufactureIcons } from "@/assets/icons"
+import prod1 from "@/assets/images/products/prod-1.jpeg"
+import prod2 from "@/assets/images/products/prod-2.jpeg"
+import prod3 from "@/assets/images/products/prod-3.jpeg"
+import prod4 from "@/assets/images/products/prod-4.jpeg"
+import prod5 from "@/assets/images/products/prod-5.jpeg"
+import prod6 from "@/assets/images/products/prod-6.jpeg"
 import { Button } from "@/components/ui/button"
 import { Section } from "@/components/layout/section"
 import { MainHeading } from "@/components/ui/main-heading"
@@ -15,11 +20,17 @@ type Service = {
   title: string
   description: string
   href: string
+  /**
+   * The product shot. Held on the service rather than looked up by index, so
+   * reordering the cards keeps each valve with its own image.
+   */
+  image: StaticImageData
 }
 
 const SERVICES: Service[] = [
   {
     number: "01",
+    image: prod1,
     title: "Gate Valves",
     description:
       "Reliable isolation valves engineered for tight shut-off across industrial piping systems.",
@@ -27,6 +38,7 @@ const SERVICES: Service[] = [
   },
   {
     number: "02",
+    image: prod2,
     title: "Butterfly Valves",
     description:
       "Compact, high-performance flow control with durable discs for demanding applications.",
@@ -34,6 +46,7 @@ const SERVICES: Service[] = [
   },
   {
     number: "03",
+    image: prod3,
     title: "Globe Valves",
     description:
       "Precision throttling valves designed for accurate regulation and long service life.",
@@ -41,6 +54,7 @@ const SERVICES: Service[] = [
   },
   {
     number: "04",
+    image: prod4,
     title: "Check Valves",
     description:
       "Automatic backflow prevention built for consistent sealing and low maintenance.",
@@ -48,6 +62,7 @@ const SERVICES: Service[] = [
   },
   {
     number: "05",
+    image: prod5,
     title: "Strainers",
     description:
       "Protect downstream equipment with robust filtration for clean, reliable flow.",
@@ -55,6 +70,7 @@ const SERVICES: Service[] = [
   },
   {
     number: "06",
+    image: prod6,
     title: "Ball Valves",
     description:
       "Quarter-turn shut-off valves delivering fast operation and leak-tight performance.",
@@ -64,7 +80,6 @@ const SERVICES: Service[] = [
 
 function ServiceCard({ service, index }: { service: Service; index: number }) {
   const reduceMotion = useReducedMotion()
-  const icon = manufactureIcons[index]
 
   const textMotion = {
     initial: reduceMotion ? false : { opacity: 0, x: -40 },
@@ -114,7 +129,7 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
         </motion.div>
 
         <motion.div
-          className="relative flex aspect-square w-full items-center justify-center"
+          className="relative aspect-square w-full"
           initial={imageMotion.initial}
           whileInView={imageMotion.whileInView}
           viewport={{ once: true, amount: 0.35 }}
@@ -124,14 +139,14 @@ function ServiceCard({ service, index }: { service: Service; index: number }) {
             delay: 0.06 + index * 0.05,
           }}
         >
+          {/* `contain` rather than a fixed height: the product shots are a mix
+              of portrait and landscape, so each scales to fit the same square. */}
           <Image
-            src={icon}
+            src={service.image}
             alt={service.title}
-            width={114}
-            height={184}
-            unoptimized
+            fill
+            sizes="(max-width: 640px) 35vw, (max-width: 1024px) 22vw, 15vw"
             className="object-contain object-center"
-            style={{ width: "auto", height: 184 }}
           />
         </motion.div>
       </div>
