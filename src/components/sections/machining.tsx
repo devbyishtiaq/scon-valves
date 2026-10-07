@@ -50,7 +50,7 @@ export function Machining({
     <Section id="products" className={cn("bg-white", className)}>
       <div className="grid w-full gap-10 items-center md:grid-cols-2 md:gap-12 lg:gap-16">
         <motion.div
-          className="relative aspect-[4/3] w-full overflow-hidden rounded-[1.75rem] lg:rounded-[2rem]"
+          className="relative aspect-video w-full overflow-hidden rounded-[1.75rem] lg:rounded-[2rem]"
           initial={imageMotion.initial}
           whileInView={imageMotion.whileInView}
           viewport={{ once: true, amount: 0.3 }}

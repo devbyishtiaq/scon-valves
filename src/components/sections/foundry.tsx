@@ -39,7 +39,7 @@ export function Foundry({ imageSrc = foundryImage, className }: FoundryProps) {
     <Section id="foundry" className={cn("bg-white", className)}>
       <div className="grid w-full items-center gap-10 md:grid-cols-2 md:gap-12 lg:gap-16">
         <motion.div
-          className="aspect-[4/3] w-full overflow-hidden rounded-[1.75rem] lg:rounded-[2rem]"
+          className="aspect-video w-full overflow-hidden rounded-[1.75rem] lg:rounded-[2rem]"
           initial={imageMotion.initial}
           whileInView={imageMotion.whileInView}
           viewport={{ once: true, amount: 0.3 }}
