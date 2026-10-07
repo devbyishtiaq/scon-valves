@@ -10,10 +10,14 @@ import { MainHeading } from "@/components/ui/main-heading"
 import { getVideo } from "@/lib/cloudinary"
 import { cn } from "@/lib/utils"
 
+/**
+ * Supplied as one block; split at sentence boundaries to match the section's
+ * existing three-paragraph rhythm. No wording changed.
+ */
 const PARAGRAPHS = [
-  "Equipped with the most advanced foundry plant KNOWN as NO-BAKE, CHEMICAL BONDED, including In-House electrical furnaces to produce the best quality castings & to make best quality products.",
-  "Its first of its kind foundry plant in Pakistan, also known as the chemical bonded process, which make the high-quality moulds for high quality castings.",
-  "With NO-BAKE FOUNDRY, the casting quality remain perfect, and will have equal wall thicknesses, weights, dimensions & remain FREE FROM THE POROSITY, PIN HOLES & BLOW HOLES.",
+  "SCON Valves operates an advanced NO-BAKE, chemically bonded foundry plant, supported by in-house electric furnaces, enabling the production of high-quality and precision-engineered castings for demanding valve applications.",
+  "This advanced process helps achieve equal wall thicknesses, consistent weight, accurate dimensions, and excellent surface quality, while significantly minimizing casting defects such as porosity, pinholes, and blowholes.",
+  "Our foundry capabilities provide a strong foundation for reliable OEM castings and high-performance valve products, ensuring consistent quality from raw material melting through to the finished casting, our foundry is equipped with in-house latest testing machines like, spectrometer, and Brinell hardness testing, tensile testing, sand quality & sand grains as per specified in standards.",
 ] as const
 
 type FoundryProps = {
@@ -39,13 +43,13 @@ export function Foundry({ imageSrc = foundryImage, className }: FoundryProps) {
     <Section id="foundry" className={cn("bg-white", className)}>
       <div className="grid w-full items-center gap-10 md:grid-cols-2 md:gap-12 lg:gap-16">
         <motion.div
-          className="aspect-video w-full overflow-hidden rounded-xl"
+          className="aspect-video relative w-full overflow-hidden rounded-[0.625rem] border-2 border-gray-300"
           initial={imageMotion.initial}
           whileInView={imageMotion.whileInView}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         >
-          <div className="relative h-full w-full overflow-hidden rounded-xl border-2 border-gray-300">
+          <div className="relative h-full w-full overflow-hidden">
             <Image
               src={imageSrc}
               alt="NO-BAKE foundry mold heated during OEM casting production"
