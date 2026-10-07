@@ -12,16 +12,25 @@ import { MainHeading } from "@/components/ui/main-heading"
 import { getVideo } from "@/lib/cloudinary"
 import { cn } from "@/lib/utils"
 
+/**
+ * Capability narrative only. The hard numbers — size range, materials,
+ * pressure ratings — and the commercial terms live in ADVANTAGES below, so
+ * the two do not repeat each other.
+ */
 const BODY_COPY =
-  "MACHINING is equipped with latest machines including CNC's, which ensure the high-quality machining of valves, also having in-house testing facilities equipped with advanced hydrostatic testing bench, ultrasonic thickness testing, brunel hardness testing."
+  "Scon Valves is equipped with advanced machining facilities, including modern CNC machines, ensuring precision, consistency, and high-quality machining of valve components. Our manufacturing capabilities are supported by comprehensive in-house testing facilities, including advanced hydrostatic pressure testing benches, ensuring the reliability and performance of our products. SCON Valves provides dependable valve solutions engineered to meet the demanding requirements of all type of industries."
 
+/**
+ * The specs the paragraph deliberately leaves out. The warranty is the one
+ * entry with no source in the supplied copy; it is kept because the About Us
+ * section advertises the same 5-year cover.
+ */
 const ADVANTAGES = [
-  "Warranty 60 MONTHS - free replacement",
-  "Sizes availability from DN15",
-  "Availability of complete range of valves",
+  "Complete range of valves from DN15 to DN1200",
   "Material compositions in Cast Iron, Ductile Iron & Cast Steel",
-  "Complete technical support & after sales service",
   "Pressure ratings from PN16 to PN40 & Class 125 to Class 300",
+  "Complete technical support & after sales service",
+  "Warranty 60 MONTHS - free replacement",
 ] as const
 
 type MachiningProps = {
