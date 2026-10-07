@@ -39,18 +39,18 @@ export function Foundry({ imageSrc = foundryImage, className }: FoundryProps) {
     <Section id="foundry" className={cn("bg-white", className)}>
       <div className="grid w-full items-center gap-10 md:grid-cols-2 md:gap-12 lg:gap-16">
         <motion.div
-          className="aspect-video w-full overflow-hidden rounded-[1.75rem] lg:rounded-[2rem]"
+          className="aspect-video w-full overflow-hidden rounded-xl"
           initial={imageMotion.initial}
           whileInView={imageMotion.whileInView}
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         >
-          <div className="relative h-full w-full overflow-hidden rounded-[1.75rem] border-2 border-gray-300">
+          <div className="relative h-full w-full overflow-hidden rounded-xl border-2 border-gray-300">
             <Image
               src={imageSrc}
               alt="NO-BAKE foundry mold heated during OEM casting production"
               fill
-              className="object-cover p-1 rounded-[1.75rem]"
+              className="object-cover p-1 rounded-[0.625rem]"
               sizes="(max-width: 768px) 100vw, 50vw"
             />
 
@@ -58,7 +58,7 @@ export function Foundry({ imageSrc = foundryImage, className }: FoundryProps) {
               <CloudinaryVideo
                 sources={video.sources}
                 lazy
-                className="rounded-[1.75rem] p-1"
+                className="rounded-[0.625rem] p-1"
               />
             ) : null}
           </div>
