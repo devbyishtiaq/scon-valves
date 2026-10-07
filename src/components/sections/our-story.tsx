@@ -10,8 +10,11 @@ import { MainHeading } from "@/components/ui/main-heading"
 import { cn } from "@/lib/utils"
 import PrecisionVelve from "@/assets/images/percision-velve.png"
 
+/** Rendered in <strong> ahead of BODY_COPY, which continues the sentence. */
+const COMPANY = "SCON Valves (Pvt.) Ltd."
+
 const BODY_COPY =
-  "Discover how our advanced machinery, including vertical and horizontal lathes, CNC machining system, and horizontal boring machines, ensures precise valve production. With cutting-edge automation and meticulous attention to detail, we deliver high-quality valves that meet stringent customer specifications, supporting reliability even in the most demanding environments."
+  "is a well-established and reputable valve manufacturer, recognized for its strong market presence, commitment to quality, and structured internal management systems. Our modern manufacturing facilities are equipped with No-bake foundry and advanced machinery for production, processing, and testing. Backed by a skilled workforce of experienced engineers, technicians, and trained assembly personnel, we ensure precision, reliability, and high-quality output in every product."
 
 type OurStoryProps = {
   imageSrc?: StaticImageData
@@ -55,6 +58,7 @@ export function OurStory({ imageSrc = storyImage, className }: OurStoryProps) {
           <MainHeading text={"Precision Valve\nManufacturing"} />
 
           <p className=" text-lg leading-relaxed text-zinc-600 md:mt-2 md:text-lg font-normal">
+            <strong className="font-semibold text-zinc-800">{COMPANY}</strong>{" "}
             {BODY_COPY}
           </p>
         </motion.div>
