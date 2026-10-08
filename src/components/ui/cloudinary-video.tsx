@@ -1,17 +1,27 @@
 "use client"
 
 import { useReducedMotion } from "motion/react"
-import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react"
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from "react"
 
 import { cn } from "@/lib/utils"
 import type { CloudinaryVideoSources } from "@/lib/cloudinary"
 
 type CloudinaryVideoProps = Pick<CloudinaryVideoSources, "sources"> & {
+  /**
+   * Frame shown until playback starts. Supplying one makes the element opaque
+   * from the very first paint, so nothing behind it is ever visible.
+   */
   poster?: string
   className?: string
-  /** Media query that must match before the video is requested at all. */
+  /** Media query that must match before the sources are requested. */
   minWidth?: string
-  /** Hold the request back until the video is near the viewport. */
+  /** Hold the sources back until the video is near the viewport. */
   lazy?: boolean
 }
 
@@ -29,20 +39,22 @@ function useMediaQuery(query: string | undefined) {
   return useSyncExternalStore(
     subscribe,
     () => (query ? window.matchMedia(query).matches : true),
-    // No gate renders on the server; a gated video waits to be measured.
+    // No gate matches on the server; a gated video waits to be measured.
     () => !query
   )
 }
 
 /**
- * Autoplaying, muted, looping video laid over whatever sits behind it.
+ * Autoplaying, muted, looping video.
  *
- * Renders nothing — and so downloads nothing — when the visitor prefers
- * reduced motion or the viewport is narrower than `minWidth`; the static image
- * behind it stays visible in both cases. With `lazy`, the sources are withheld
- * until the element is near the viewport, so a visitor who never scrolls that
- * far never pays for the download. Fades in on `canplay`, so a slow connection
- * never flashes a black frame.
+ * The element itself always renders — only the <source> children are gated —
+ * so a poster can paint on the server and act as the first frame. That keeps
+ * a separate fallback image from flashing up before the video takes over.
+ *
+ * Sources are withheld when the visitor prefers reduced motion, when the
+ * viewport is narrower than `minWidth`, or, with `lazy`, until the element is
+ * near the viewport. In each case the poster stays on screen and no video
+ * bytes are downloaded.
  */
 export function CloudinaryVideo({
   sources,
@@ -53,12 +65,14 @@ export function CloudinaryVideo({
 }: CloudinaryVideoProps) {
   const reduceMotion = useReducedMotion()
   const widthAllows = useMediaQuery(minWidth)
-  const [shouldLoad, setShouldLoad] = useState(!lazy)
+  const [nearViewport, setNearViewport] = useState(!lazy)
   const [canPlay, setCanPlay] = useState(false)
   const videoRef = useRef<HTMLVideoElement | null>(null)
 
-  // A callback ref rather than useEffect: the element only mounts once the
-  // reduced-motion and width gates pass, which a dependency array cannot see.
+  const shouldLoad = nearViewport && widthAllows && !reduceMotion
+
+  // A callback ref rather than useEffect: it fires exactly when the element
+  // mounts, which a dependency array cannot observe.
   const attach = useCallback(
     (node: HTMLVideoElement | null) => {
       videoRef.current = node
@@ -67,7 +81,7 @@ export function CloudinaryVideo({
       const observer = new IntersectionObserver(
         (entries) => {
           if (entries.some((entry) => entry.isIntersecting)) {
-            setShouldLoad(true)
+            setNearViewport(true)
             observer.disconnect()
           }
         },
@@ -88,7 +102,9 @@ export function CloudinaryVideo({
     if (shouldLoad) videoRef.current?.load()
   }, [shouldLoad])
 
-  if (reduceMotion || !widthAllows) return null
+  // With a poster the element already shows the right frame, so it can be
+  // opaque immediately. Without one it fades in over whatever sits behind it.
+  const opaque = Boolean(poster) || canPlay
 
   return (
     <video
@@ -103,8 +119,9 @@ export function CloudinaryVideo({
       tabIndex={-1}
       onCanPlay={() => setCanPlay(true)}
       className={cn(
-        "absolute inset-0 size-full object-cover transition-opacity duration-700",
-        canPlay ? "opacity-100" : "opacity-0",
+        "absolute inset-0 size-full object-cover",
+        !poster && "transition-opacity duration-700",
+        opaque ? "opacity-100" : "opacity-0",
         className
       )}
     >

@@ -21,28 +21,40 @@ export function Hero({ className }: HeroProps) {
         className
       )}
     >
-      <div aria-hidden className="absolute inset-0">
-        {/* Poster frame — also the fallback whenever Cloudinary is not
-            configured or the visitor prefers reduced motion. */}
-        <Image
-          src={heroBg}
-          alt=""
-          fill
-          priority
-          className={cn(
-            "object-cover",
-            !video && "motion-safe:animate-[hero-zoom_18s_ease-out_forwards]"
-          )}
-          sizes="100vw"
+      {/* Fetch the poster as early as the browser would a priority image, so
+          the video's own opening frame is the first thing painted. */}
+      {video ? (
+        <link
+          rel="preload"
+          as="image"
+          href={video.poster}
+          fetchPriority="high"
         />
+      ) : null}
 
+      <div aria-hidden className="absolute inset-0">
         {video ? (
+          /* The poster is the fallback: it holds the frame until playback
+             starts, and stays put under reduced motion, on narrow screens and
+             if the video cannot play. heroBg is not rendered at all here —
+             showing it first made a different photo flash up before the
+             footage took over. */
           <CloudinaryVideo
             poster={video.poster}
             sources={video.sources}
             minWidth="(min-width: 768px)"
           />
-        ) : null}
+        ) : (
+          /* Only reached when Cloudinary is unconfigured. */
+          <Image
+            src={heroBg}
+            alt=""
+            fill
+            priority
+            className="object-cover motion-safe:animate-[hero-zoom_18s_ease-out_forwards]"
+            sizes="100vw"
+          />
+        )}
 
         {/* Flat tint over the whole frame. Knocks back the clip's own burned-in
             captions and keeps contrast steady as the footage brightens. */}
