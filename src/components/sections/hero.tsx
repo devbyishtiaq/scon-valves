@@ -56,17 +56,20 @@ export function Hero({ className }: HeroProps) {
           />
         )}
 
-        {/* Flat tint over the whole frame. Knocks back the clip's own burned-in
-            captions and keeps contrast steady as the footage brightens. */}
-        <div className="absolute inset-0 bg-black/30" />
+        {/* Light overall tint. Knocks back the clip's own burned-in captions
+            and steadies contrast as the footage brightens, without draining
+            the colour out of the whole frame. */}
+        <div className="absolute inset-0 bg-black/8" />
 
-        <div className="absolute inset-0 bg-linear-to-r from-black/20 via-black/50 to-black/0" />
-        <div className="absolute inset-0 bg-linear-to-t from-black/45 via-transparent to-black/0" />
+        {/* Weighted to the left, where the headline sits, so the right half of
+            the shot stays close to the original footage. */}
+        <div className="absolute inset-0 bg-linear-to-r from-black/45 via-black/12 to-black/0" />
+        <div className="absolute inset-0 bg-linear-to-t from-black/30 via-transparent to-black/0" />
 
-        {/* Header scrim. Both gradients above fade out at the top, which left
+        {/* Header scrim. The gradients above fade out at the top, which left
             the logo and nav sitting on raw footage — bright video frames made
             them unreadable. */}
-        <div className="absolute inset-x-0 top-0 h-40 bg-linear-to-b from-black/85 via-black/45 to-transparent md:h-56" />
+        <div className="absolute inset-x-0 top-0 h-40 bg-linear-to-b from-black/70 via-black/30 to-transparent md:h-56" />
       </div>
 
       <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center px-5 pb-20 pt-28 md:px-8 md:pb-28 md:pt-32">
