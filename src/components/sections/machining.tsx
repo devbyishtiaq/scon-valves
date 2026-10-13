@@ -1,9 +1,7 @@
 "use client"
 
-import { Check, CheckIcon } from "lucide-react"
 import { motion, useReducedMotion } from "motion/react"
 import Image, { type StaticImageData } from "next/image"
-import Checkicon from "@/assets/images/check-icon.svg"
 
 import machiningImage from "@/assets/images/maching-img.png"
 import { Section } from "@/components/layout/section"
@@ -12,26 +10,8 @@ import { MainHeading } from "@/components/ui/main-heading"
 import { getVideo } from "@/lib/cloudinary"
 import { cn } from "@/lib/utils"
 
-/**
- * Capability narrative only. The hard numbers — size range, materials,
- * pressure ratings — and the commercial terms live in ADVANTAGES below, so
- * the two do not repeat each other.
- */
 const BODY_COPY =
-  "Scon Valves is equipped with advanced machining facilities, including modern CNC machines, ensuring precision, consistency, and high-quality machining of valve components. Our manufacturing capabilities are supported by comprehensive in-house testing facilities, including advanced hydrostatic pressure testing benches, ensuring the reliability and performance of our products. SCON Valves provides dependable valve solutions engineered to meet the demanding requirements of all type of industries."
-
-/**
- * The specs the paragraph deliberately leaves out. The warranty is the one
- * entry with no source in the supplied copy; it is kept because the About Us
- * section advertises the same 5-year cover.
- */
-const ADVANTAGES = [
-  "Complete range of valves from DN15 to DN1200",
-  "Material compositions in Cast Iron, Ductile Iron & Cast Steel",
-  "Pressure ratings from PN16 to PN40 & Class 125 to Class 300",
-  "Complete technical support & after sales service",
-  "Warranty 60 MONTHS - free replacement",
-] as const
+  "Scon Valves is equipped with advanced machining facilities, including modern CNC machines, ensuring precision, consistency, and high-quality machining of valve components. Our manufacturing capabilities are supported by comprehensive in-house testing facilities, including advanced hydrostatic pressure testing benches, ensuring the reliability and performance of our products. We offer a complete range of valves in sizes from DN15 to DN1200, manufactured in Cast Iron, Ductile Iron, and Cast Steel, with pressure ratings from PN16 to PN40 and Class 125 to Class 300. Backed by comprehensive technical support and dedicated after-sales service, SCON Valves provides dependable valve solutions engineered to meet the demanding requirements of all type of industries."
 
 type MachiningProps = {
   imageSrc?: StaticImageData
@@ -95,22 +75,6 @@ export function Machining({
           <p className="mt-2 text-base leading-relaxed text-zinc-600 md:mt-1 md:text-lg">
             {BODY_COPY}
           </p>
-
-          <p className="mt-6 text-base font-bold text-[#222222] md:text-lg">
-            Advantages:
-          </p>
-
-          <ul className="mt-4 space-y-3">
-            {ADVANTAGES.map((item) => (
-              <li key={item} className="flex items-start gap-3">
-                <Image src={Checkicon} alt="icon-check" />
-
-                <span className="text-sm leading-snug text-zinc-600 md:text-base">
-                  {item}
-                </span>
-              </li>
-            ))}
-          </ul>
         </motion.div>
       </div>
     </Section>
