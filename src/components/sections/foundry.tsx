@@ -41,7 +41,7 @@ export function Foundry({ imageSrc = foundryImage, className }: FoundryProps) {
 
   return (
     <Section id="foundry" className={cn("bg-white", className)}>
-      <div className="grid w-full items-center gap-10 md:grid-cols-2 md:gap-12 lg:gap-16">
+      <div className="grid w-full items-center gap-10 md:grid-cols-2 lg:grid-cols-[1.1fr_0.9fr] xl:grid-cols-[1.2fr_0.8fr] md:gap-12 lg:gap-16">
         <motion.div
           className="aspect-video relative w-full overflow-hidden rounded-[0.625rem] border-2 border-gray-300"
           initial={imageMotion.initial}

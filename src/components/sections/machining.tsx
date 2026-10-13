@@ -37,7 +37,7 @@ export function Machining({
 
   return (
     <Section id="products" className={cn("bg-white", className)}>
-      <div className="grid w-full gap-10 items-center md:grid-cols-2 md:gap-12 lg:gap-16">
+      <div className="grid w-full gap-10 items-center md:grid-cols-2 lg:grid-cols-[1.1fr_0.9fr] xl:grid-cols-[1.2fr_0.8fr] md:gap-12 lg:gap-16">
         <motion.div
           className="relative aspect-video w-full overflow-hidden rounded-xl"
           initial={imageMotion.initial}
