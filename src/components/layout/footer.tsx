@@ -7,15 +7,16 @@ import Image from "next/image"
 import FooterMap from "@/assets/images/footer-map.png"
 
 const SERVICES = [
-  { label: "Products", href: "#products" },
-  { label: "Clientele", href: "#clientele" },
-  { label: "Technicalities", href: "#foundry" },
-  { label: "Certificates", href: "#certificates" },
+  { label: "Products", href: "/#products" },
+  // No section with id "clientele" exists yet, so this one still goes nowhere.
+  { label: "Clientele", href: "/#clientele" },
+  { label: "Technicalities", href: "/#foundry" },
+  { label: "Certificates", href: "/#certificates" },
 ] as const
 
 const SITEMAP = [
-  { label: "Home", href: "#" },
-  { label: "Contact", href: "#contact" },
+  { label: "Home", href: "/" },
+  { label: "Contact", href: "/#contact" },
 ] as const
 
 const CONTACT = [

@@ -133,6 +133,14 @@
     @apply font-sans;
   }
 
+  /* Anchor links glide rather than jump. Gated on the motion preference so
+     it does not override a visitor who has asked for less movement. */
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
   p {
     @apply font-sans;
   }

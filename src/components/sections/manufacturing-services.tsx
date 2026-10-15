@@ -184,7 +184,7 @@ export function ManufacturingServices({
             size="lg"
             className="bg-zinc-50 px-10"
           >
-            <Link href="#products">View All</Link>
+            <Link href="/#products">View All</Link>
           </Button>
         </div>
       </div>

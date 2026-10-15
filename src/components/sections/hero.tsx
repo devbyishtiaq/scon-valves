@@ -86,7 +86,7 @@ export function Hero({ className }: HeroProps) {
 
           <div className="mt-8 motion-safe:animate-[hero-rise_0.9s_ease-out_0.2s_both] md:mt-10">
             <Button asChild variant="primary" size="lg">
-              <Link href="#contact">Contact us</Link>
+              <Link href="/#contact">Contact us</Link>
             </Button>
           </div>
         </div>
