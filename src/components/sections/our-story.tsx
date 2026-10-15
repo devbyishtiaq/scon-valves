@@ -57,14 +57,14 @@ export function OurStory({ imageSrc = storyImage, className }: OurStoryProps) {
 
           <MainHeading text={"Precision Valve\nManufacturing"} />
 
-          <p className=" text-lg leading-relaxed text-zinc-600 md:mt-2 md:text-lg font-normal">
+          <p className="text-sm font-normal leading-relaxed text-zinc-600 md:mt-2 md:text-base">
             <strong className="font-semibold text-zinc-800">{COMPANY}</strong>{" "}
             {BODY_COPY}
           </p>
         </motion.div>
 
         <motion.div
-          className="relative aspect-[4/3] w-full overflow-hidden rounded-[1.75rem] md:aspect-[5/4] lg:rounded-[2rem]"
+          className="relative aspect-[4/3] w-full overflow-hidden rounded-xl md:aspect-[5/4]"
           initial={imageMotion.initial}
           whileInView={imageMotion.whileInView}
           viewport={{ once: true, amount: 0.35 }}
