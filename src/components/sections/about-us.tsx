@@ -3,10 +3,12 @@
 import { motion, useReducedMotion } from "motion/react"
 
 import { Section } from "@/components/layout/section"
+import { Button } from "@/components/ui/button"
 import { MainHeading } from "@/components/ui/main-heading"
 import { cn } from "@/lib/utils"
 import Sparkles from "@/assets/images/three-stars.svg"
 import Image from "next/image"
+import Link from "next/link"
 
 const STATS = [
   {
@@ -99,6 +101,15 @@ export function AboutUs({ className }: AboutUsProps) {
               <p className="mt-2 text-xs font-medium tracking-[0.16em] text-white/80 uppercase">
                 Certified since 2004.
               </p>
+
+              <Button
+                asChild
+                variant="secondary"
+                size="lg"
+                className="mt-1 rounded-md md:mt-3"
+              >
+                <Link href="/about">Learn More</Link>
+              </Button>
             </motion.div>
           </div>
         </motion.div>
