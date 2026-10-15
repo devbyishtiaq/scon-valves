@@ -86,3 +86,45 @@ export const PRODUCT_RANGE = [
 
 export const PRODUCT_RANGE_NOTE =
   "Available in a wide range of sizes, pressure classes, and materials to meet diverse project requirements."
+
+/* ---------------------------------------------------------------- OEM ---- */
+
+export const OEM_INTRO =
+  "Having in-house foundry & machine shop allows us to offer OEM Casting & machined parts in following materials."
+
+/** Components cast in-house. */
+export const OEM_CAST_COMPONENTS = [
+  "Bodies",
+  "Bonnets",
+  "Handwheel",
+  "Glands",
+  "Wedge",
+  "Disc",
+] as const
+
+export const OEM_CASTING_MATERIALS = [
+  "Cast Iron",
+  "Ductile Iron",
+  "Cast Steel",
+  "Stainless Steel",
+] as const
+
+/**
+ * Machined parts. Seat rings and spindles are offered in the same grades, but
+ * they are kept as separate entries because the client lists them separately
+ * and the two ranges may diverge.
+ */
+const MACHINED_GRADES = [
+  "Brass CW614N",
+  "SS 201",
+  "SS 410",
+  "SS 304",
+  "SS 316",
+  "SS 304L",
+  "SS 316L",
+] as const
+
+export const OEM_MACHINED_PARTS = [
+  { part: "Seat Rings", grades: MACHINED_GRADES },
+  { part: "Spindles", grades: MACHINED_GRADES },
+] as const
