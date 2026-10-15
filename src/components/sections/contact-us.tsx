@@ -58,40 +58,33 @@ const MAP_FEATURES = [
     icon: ParkingCircle,
   },
   {
-    title: "Mon - Fri",
-    detail: "9AM - 6PM (PKT)",
+    title: "Mon - Sat",
+    detail: "10AM - 6PM (PKT)",
     icon: Clock3,
   },
 ] as const
 
 /**
- * Head office coordinates.
+ * Head office coordinates, taken from the Google Maps pin.
  *
- * TODO: confirm against the Google Maps listing. Nominatim has no entry for
- * the building itself, so this resolves to Main Boulevard Gulberg rather than
- * 32-B1 exactly. To correct it: open the office on Google Maps, right-click the
- * pin, click the lat/long to copy, and paste the two numbers below — the bbox
- * and the marker both derive from this one pair.
+ * Not geocodable from the address: no open geocoder has 32-B1 mapped, and
+ * both Nominatim and Photon resolve it only to Main Boulevard Gulberg, which
+ * sits ~1.4km south of the actual building. The map embed and the directions
+ * link below both derive from this one pair.
  */
-const OFFICE = { lat: 31.51859, lng: 74.34539 }
+const OFFICE = { lat: 31.530943, lng: 74.346962 }
 
-/** Half-width of the viewport around the office, in degrees. */
-const MAP_SPAN = { lng: 0.008, lat: 0.005 }
-
-const MAP_EMBED_SRC = (() => {
-  const bbox = [
-    OFFICE.lng - MAP_SPAN.lng,
-    OFFICE.lat - MAP_SPAN.lat,
-    OFFICE.lng + MAP_SPAN.lng,
-    OFFICE.lat + MAP_SPAN.lat,
-  ].join(",")
-
-  // `marker` is drawn by OpenStreetMap itself, so it stays anchored to these
-  // coordinates when the visitor zooms or pans.
-  return `https://www.openstreetmap.org/export/embed.html?bbox=${encodeURIComponent(
-    bbox
-  )}&layer=mapnik&marker=${OFFICE.lat}%2C${OFFICE.lng}`
-})()
+/**
+ * Google rather than OpenStreetMap. OSM has almost nothing mapped around this
+ * address — at zoom 17-18 its tiles are bare road outlines with no buildings
+ * or labels, and it stops at zoom 19, so deeper zooms upscale and blur. The
+ * previous pin only looked detailed because it sat on Main Boulevard Gulberg,
+ * a major road OSM has mapped thoroughly.
+ *
+ * Queried by coordinate so the pin lands exactly on OFFICE, and so the map
+ * agrees with the directions link below.
+ */
+const MAP_EMBED_SRC = `https://maps.google.com/maps?q=${OFFICE.lat}%2C${OFFICE.lng}&z=17&hl=en&output=embed`
 
 const DIRECTIONS_HREF =
   "https://www.google.com/maps/search/?api=1&query=" +
@@ -117,7 +110,7 @@ export function ContactUs({ className }: ContactUsProps) {
                   Get In Touch
                 </p>
                 <h2 className="mt-1 font-satoshi text-sm font-light tracking-[0.12em] text-black md:text-base">
-                  Contact <span className="text-(--brand-red)">Us</span>
+                  Contact Us
                 </h2>
                 <p className="mt-2 text-sm text-zinc-500 md:text-base">
                   We&apos;d love to hear from you. Our team is always here to
@@ -183,7 +176,7 @@ export function ContactUs({ className }: ContactUsProps) {
                     We&apos;re here to help!
                   </p>
                   <p className="mt-1 text-sm text-white/90">
-                    Mon-Fri: 9:00 AM - 6:00 PM (PKT)
+                    Mon-Sat: 10:00 AM - 6:00 PM (PKT)
                   </p>
                 </div>
                 <Button
@@ -201,7 +194,7 @@ export function ContactUs({ className }: ContactUsProps) {
               <iframe
                 title="SCONVALVES location map — Main Gulberg, Lahore"
                 src={MAP_EMBED_SRC}
-                className="absolute inset-0 h-full w-full border-0 grayscale-[20%] contrast-[1.05]"
+                className="absolute inset-0 h-full w-full border-0"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
               />
