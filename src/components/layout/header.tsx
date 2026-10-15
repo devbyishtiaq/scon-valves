@@ -11,16 +11,21 @@ import { Button } from "@/components/ui/button"
 import { productCategories } from "@/data/product-categories"
 import { cn } from "@/lib/utils"
 
+/**
+ * Absolute paths, not bare hashes. A bare "#about" resolves against whatever
+ * page you are on, so from /about it produced /about#about and went nowhere;
+ * "#" alone did nothing at all.
+ */
 const navLinks = [
-  { label: "Home", href: "#" },
-  { label: "About us", href: "#about" },
+  { label: "Home", href: "/" },
+  { label: "About us", href: "/about" },
   {
     label: "Products",
-    href: "#products",
+    href: "/#products",
     hasDropdown: true,
   },
-  { label: "Certificates", href: "#certificates" },
-  { label: "Gallery", href: "#gallery" },
+  { label: "Certificates", href: "/#certificates" },
+  { label: "Gallery", href: "/#gallery" },
 ] as const
 
 const getNavItemClass = (isHomePage: boolean) =>
@@ -180,7 +185,10 @@ export function Header({ className }: { className?: string }) {
                   <div
                     role="menu"
                     className={cn(
-                      "absolute top-full left-0 z-10 pt-2 transition-all",
+                      // Anchored right: Products sits near the right edge of the row, and the
+                      // panel widens when a category opens, so growing leftward keeps it
+                      // on screen instead of pushing the page sideways.
+                      "absolute top-full right-0 z-10 pt-2 transition-all",
                       productsOpen
                         ? "visible translate-y-0 opacity-100"
                         : "invisible pointer-events-none -translate-y-1 opacity-0"
