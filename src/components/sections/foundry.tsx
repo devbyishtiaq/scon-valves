@@ -41,7 +41,11 @@ export function Foundry({ imageSrc = foundryImage, className }: FoundryProps) {
 
   return (
     <Section id="foundry" className={cn("bg-white", className)}>
-      <div className="grid w-full items-center gap-10 md:grid-cols-2 lg:grid-cols-[1.1fr_0.9fr] xl:grid-cols-[1.2fr_0.8fr] md:gap-12 lg:gap-16">
+      {/* Full-width section heading: at the column width it wrapped onto two
+          lines. */}
+      <MainHeading text="Foundry - OEM Castings" />
+
+      <div className="mt-8 grid w-full items-center gap-10 md:mt-12 md:grid-cols-2 lg:grid-cols-[1.1fr_0.9fr] xl:grid-cols-[1.2fr_0.8fr] md:gap-12 lg:gap-16">
         <motion.div
           className="aspect-video relative w-full overflow-hidden rounded-[0.625rem] border-2 border-gray-300"
           initial={imageMotion.initial}
@@ -74,13 +78,11 @@ export function Foundry({ imageSrc = foundryImage, className }: FoundryProps) {
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.08 }}
         >
-          <MainHeading text="Foundry - OEM Castings" />
-
-          <div className="mt-4 space-y-4 md:mt-5">
+          <div className="space-y-4">
             {PARAGRAPHS.map((paragraph) => (
               <p
                 key={paragraph.slice(0, 40)}
-                className="text-base leading-relaxed text-zinc-600 md:text-lg"
+                className="text-sm leading-relaxed text-zinc-600 md:text-base"
               >
                 {paragraph}
               </p>
