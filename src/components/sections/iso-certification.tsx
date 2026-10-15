@@ -55,8 +55,12 @@ export function IsoCertification({ className }: IsoCertificationProps) {
           items={CERTIFICATES}
           className="mt-8 md:mt-12"
           columnsClassName="grid-cols-2 lg:grid-cols-4"
-          tileClassName="aspect-[3/4] bg-white/5"
-          imageClassName="object-contain object-center"
+          /* The scans vary in aspect (0.689-0.761 against the tile's 0.750),
+             so object-contain leaves bars on some and not others. A white
+             card with a consistent inset turns that into a uniform margin —
+             the scans are white documents, so the seam disappears. */
+          tileClassName="aspect-[3/4] bg-white"
+          imageClassName="object-contain object-center p-2.5"
           captionClassName="text-white/70"
         />
       </div>
