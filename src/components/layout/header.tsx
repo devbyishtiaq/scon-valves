@@ -24,14 +24,35 @@ const navLinks = [
     href: "/#products",
     hasDropdown: true,
   },
+  { label: "OEM Casting", href: "/oem-casting" },
   { label: "Certificates", href: "/#certificates" },
   { label: "Gallery", href: "/#gallery" },
 ] as const
 
-const getNavItemClass = (isHomePage: boolean) =>
-  isHomePage
-    ? "inline-flex items-center gap-1 rounded-lg px-4 py-2 text-sm font-medium text-white/95 transition-colors hover:bg-white/15 hover:text-white focus-visible:bg-white/15 focus-visible:outline-none"
-    : "inline-flex items-center gap-1 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:text-gray-900 focus-visible:outline-none"
+const getNavItemClass = (isHomePage: boolean, isActive = false) =>
+  cn(
+    isHomePage
+      ? "inline-flex items-center gap-1 rounded-lg whitespace-nowrap px-3 py-2 text-sm font-medium text-white/95 xl:px-4 transition-colors hover:bg-white/15 hover:text-white focus-visible:bg-white/15 focus-visible:outline-none"
+      : "inline-flex items-center gap-1 whitespace-nowrap px-3 py-2 text-sm font-medium text-gray-700 xl:px-4 transition-colors hover:text-gray-900 focus-visible:outline-none",
+    // Red reads poorly on the dark hero, so the home page marks the current
+    // item with a tint instead.
+    isActive && (isHomePage ? "bg-white/15 text-white" : "text-red-600")
+  )
+
+/**
+ * Which nav item the current route belongs to. Previously Products was simply
+ * painted red whenever the route was not the home page, so it stayed
+ * highlighted on every sub-page.
+ *
+ * Links to home-page sections (#certificates, #gallery) have no route of
+ * their own and never match; Products matches the /products/* detail routes.
+ */
+function isActiveLink(href: string, pathname: string) {
+  if (href === "/") return pathname === "/"
+  if (href === "/#products") return pathname.startsWith("/products")
+  if (href.startsWith("/#")) return false
+  return pathname === href || pathname.startsWith(`${href}/`)
+}
 
 export function Header({ className }: { className?: string }) {
   const pathname = usePathname()
@@ -133,7 +154,7 @@ export function Header({ className }: { className?: string }) {
             alt="SCONVALVES"
             priority
             className={cn(
-              "h-8 w-auto max-w-full min-w-0 object-contain object-left sm:h-10 md:h-12 lg:h-12 xl:h-14 2xl:h-16",
+              "h-8 w-auto max-w-full min-w-0 object-contain object-left sm:h-10 md:h-12 lg:h-11 xl:h-14 2xl:h-16",
               isHomePage && "drop-shadow-[0_2px_10px_rgba(0,0,0,0.55)]"
             )}
           />
@@ -157,8 +178,7 @@ export function Header({ className }: { className?: string }) {
                     aria-expanded={productsOpen}
                     aria-haspopup="menu"
                     className={cn(
-                      getNavItemClass(isHomePage),
-                      !isHomePage && "text-red-600",
+                      getNavItemClass(isHomePage, isActiveLink(link.href, pathname)),
                       productsOpen &&
                         (isHomePage
                           ? "bg-white/15 text-white"
@@ -176,7 +196,9 @@ export function Header({ className }: { className?: string }) {
                       className={cn(
                         "size-3.5 opacity-80 transition-transform",
                         productsOpen && "rotate-180",
-                        !isHomePage && "text-red-600"
+                        isActiveLink(link.href, pathname) &&
+                          !isHomePage &&
+                          "text-red-600"
                       )}
                       aria-hidden
                     />
@@ -292,7 +314,13 @@ export function Header({ className }: { className?: string }) {
               <Link
                 key={link.label}
                 href={link.href}
-                className={getNavItemClass(isHomePage)}
+                aria-current={
+                  isActiveLink(link.href, pathname) ? "page" : undefined
+                }
+                className={getNavItemClass(
+                  isHomePage,
+                  isActiveLink(link.href, pathname)
+                )}
               >
                 {link.label}
               </Link>
@@ -511,11 +539,16 @@ export function Header({ className }: { className?: string }) {
                 <Link
                   key={link.label}
                   href={link.href}
+                  aria-current={
+                    isActiveLink(link.href, pathname) ? "page" : undefined
+                  }
                   className={cn(
                     "rounded-lg px-3 py-3 text-base font-medium transition-colors",
                     isHomePage
                       ? "text-white/95 hover:bg-white/10"
-                      : "text-gray-700 hover:bg-gray-100"
+                      : "text-gray-700 hover:bg-gray-100",
+                    isActiveLink(link.href, pathname) &&
+                      (isHomePage ? "bg-white/10 text-white" : "text-red-600")
                   )}
                   onClick={closeMobile}
                 >
