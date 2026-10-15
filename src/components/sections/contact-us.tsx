@@ -4,8 +4,8 @@ import { Car, Clock3, Mail, MapPin, ParkingCircle, Phone } from "lucide-react"
 import Image, { type StaticImageData } from "next/image"
 import Link from "next/link"
 
-import person1 from "@/assets/images/contact/person-1.jpg"
-import person2 from "@/assets/images/contact/person-2.jpg"
+import farhan from "@/assets/images/farhan.jpeg"
+import hassan from "@/assets/images/hassan.jpeg"
 import { Button } from "@/components/ui/button"
 import { ContactCard, ContactIcon } from "@/components/ui/contact-card"
 import { Section } from "@/components/layout/section"
@@ -36,13 +36,13 @@ const TEAM: {
 }[] = [
   {
     name: "Farhan Nasar",
-    role: "Director Sales & Marketing",
-    image: person1,
+    role: "Director",
+    image: farhan,
   },
   {
     name: "Hassan Nasar",
-    role: "Export Manager",
-    image: person2,
+    role: "Director",
+    image: hassan,
   },
 ]
 
@@ -159,7 +159,9 @@ export function ContactUs({ className }: ContactUsProps) {
                         src={person.image}
                         alt={person.name}
                         fill
-                        className="object-cover"
+                        /* Portrait photos in a 1:1 circle: centring the crop
+                           cut the top of the head off. */
+                        className="object-cover object-top"
                         sizes="56px"
                       />
                     </div>
